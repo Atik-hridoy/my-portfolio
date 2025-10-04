@@ -25,15 +25,13 @@ export function IntroSection() {
     <header
       id="intro"
       data-observe="section"
-      className="min-h-screen flex items-center"
+      className="min-h-[90vh] flex items-center justify-center py-12"
     >
-      <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full">
+      <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full max-w-7xl mx-auto px-4 text-center sm:text-left">
         {/* Left side */}
-        <div className="lg:col-span-3 space-y-6 sm:space-y-8">
+        <div className="lg:col-span-3 space-y-6 sm:space-y-8 mx-auto sm:mx-0 w-full">
           <div className="space-y-3 sm:space-y-2">
-            <div className="text-sm text-primary font-mono tracking-wider">
-              PORTFOLIO / 2025
-            </div>
+            <div className="text-sm text-primary font-mono">PORTFOLIO / 2025</div>
             <h1
               className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight
                text-transparent bg-clip-text bg-gradient-to-r
@@ -54,7 +52,7 @@ export function IntroSection() {
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]"></div>
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_10px_RGBA(6,182,212,0.8)]"></div>
                 Available for work
               </div>
               <div>Dhaka, Bangladesh</div>
@@ -75,9 +73,12 @@ export function IntroSection() {
 
           <div className="space-y-4">
             <div className="text-sm text-primary font-mono">TECH STACK</div>
-            <div className="flex flex-wrap gap-2">
-              {skills.map(({ label }) => (
-                <TechPill key={label} label={label} />
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+              {skills.map(({ label, Icon }) => (
+                <div key={label} className="px-3 py-1.5 rounded-full bg-muted text-sm flex items-center gap-1.5">
+                  {Icon && <Icon className="w-4 h-4" />}
+                  {label}
+                </div>
               ))}
             </div>
           </div>
