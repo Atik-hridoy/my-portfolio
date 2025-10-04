@@ -3,10 +3,10 @@
 import Link from "next/link";
 
 const SOCIALS = [
-  { name: "GitHub", handle: "@yourhandle", url: "#" },
-  { name: "LinkedIn", handle: "yourname", url: "#" },
-  { name: "Twitter", handle: "@yourhandle", url: "#" },
-  { name: "Dev.to", handle: "@yourhandle", url: "#" },
+  { name: "GitHub", handle: "@atik-hridoy", url: "https://github.com/Atik-hridoy" },
+  { name: "LinkedIn", handle: "atik-hridoy", url: "https://linkedin.com/in/md-atikuzzaman-riday-5678aa179/" },
+  { name: "Facebook", handle: "@atik_hridoy", url: "https://www.facebook.com/atik.hridoy.001" },
+
 ];
 
 export function ConnectSection() {
