@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { TechPill } from "../pills/TechPill";
-import {
-  SiReact,
+import { SiReact,
   SiSwift,
   SiKotlin,
   SiFlutter,
   SiFirebase,
   SiTypescript,
 } from "react-icons/si";
+import { TypeAnimation } from 'react-type-animation';
 
 export function IntroSection() {
   const skills = [
@@ -37,7 +37,46 @@ export function IntroSection() {
                text-transparent bg-clip-text bg-gradient-to-r
                from-[#06b6d4] via-[#a855f7] to-[#ef4444]"
             >
-              Atik<br />Hridoy
+              <div className="inline-block">
+                <TypeAnimation
+                  sequence={[
+                    'Atik',
+                    2000,
+                    'Atik',
+                    1000,
+                    'Mobile',
+                    1000,
+                    'Flutter',
+                    1000,
+                    'Atik',
+                    1000
+                  ]}
+                  wrapper="span"
+                  speed={30}
+                  style={{ display: 'inline-block' }}
+                  repeat={Infinity}
+                />
+                <br />
+                <TypeAnimation
+                  sequence={[
+                    500,
+                    'Hridoy',
+                    2000,
+                    'Hridoy',
+                    500,
+                    'Developer',
+                    1000,
+                    'Expert',
+                    1000,
+                    'Hridoy',
+                    1000
+                  ]}
+                  wrapper="span"
+                  speed={30}
+                  style={{ display: 'inline-block' }}
+                  repeat={Infinity}
+                />
+              </div>
             </h1>
           </div>
 
