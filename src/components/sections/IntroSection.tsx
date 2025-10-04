@@ -35,7 +35,7 @@ export function IntroSection() {
             <h1
               className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight
                text-transparent bg-clip-text bg-gradient-to-r
-               from-[#06b6d4] via-[#a855f7] to-[#ef4444]"
+               from-[#06b6d4] via-[#a855f7] to-[#ef4444] animate-gradient bg-[length:200%_auto]"
             >
               <div className="inline-block">
                 <TypeAnimation
@@ -89,13 +89,14 @@ export function IntroSection() {
               with elegant code, intuitive interfaces, and cutting-edge technology.
             </p>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 text-sm text-muted-foreground mb-6">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_10px_RGBA(6,182,212,0.8)]"></div>
                 Available for work
               </div>
               <div>Dhaka, Bangladesh</div>
             </div>
+
           </div>
         </div>
 
@@ -112,10 +113,17 @@ export function IntroSection() {
 
           <div className="space-y-4">
             <div className="text-sm text-primary font-mono">TECH STACK</div>
-            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+            <div className="flex flex-wrap gap-2">
               {skills.map(({ label, Icon }) => (
-                <div key={label} className="px-3 py-1.5 rounded-full bg-muted text-sm flex items-center gap-1.5">
-                  {Icon && <Icon className="w-4 h-4" />}
+                <div 
+                  key={label}
+                  className="px-3 py-1.5 rounded-full text-sm font-medium 
+                  bg-gradient-to-r from-[#06b6d4]/10 via-[#a855f7]/10 to-[#ef4444]/10
+                  border border-[#06b6d4]/20 text-foreground/80
+                  hover:from-[#06b6d4]/20 hover:via-[#a855f7]/20 hover:to-[#ef4444]/20
+                  transition-all duration-200 flex items-center gap-2"
+                >
+                  <Icon className="w-4 h-4" />
                   {label}
                 </div>
               ))}

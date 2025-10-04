@@ -12,6 +12,7 @@ import { FooterControls } from "@/components/FooterControls";
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { WorkSection } from "@/components/sections/WorkSection";
+import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ThoughtsSection } from "@/components/sections/ThoughtsSection";
 import { ConnectSection } from "@/components/sections/ConnectSection";
 
@@ -22,7 +23,7 @@ export default function Home() {
   useThemeClass(isDark);
   const { x, y } = useCursorGlow();
 
-  const sections = useMemo(() => ["intro", "experience", "work", "thoughts", "connect"], []);
+  const sections = useMemo(() => ["intro", "experience", "work", "skills", "thoughts", "connect"], []);
   useSectionObserver({
     onEnter: setActiveSection,
   });
@@ -43,6 +44,7 @@ export default function Home() {
         <IntroSection />
         <ExperienceSection />
         <WorkSection />
+        <SkillsSection />
         <ThoughtsSection />
         <ConnectSection />
       </main>
