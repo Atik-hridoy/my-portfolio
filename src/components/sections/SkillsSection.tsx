@@ -53,7 +53,7 @@ const CustomPolarAngleAxis = (props: any) => {
 
 export function SkillsSection() {
   return (
-    <section id="skills" data-observe="section" className="py-20 sm:py-32 opacity-10">
+    <section id="skills" data-observe="section" className="py-20 sm:py-32 opacity-0">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Heading */}
         <div className="text-center mb-16">

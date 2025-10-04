@@ -31,12 +31,26 @@ const THOUGHTS = [
 
 export function ThoughtsSection() {
   return (
-    <section id="thoughts" data-observe="section" className="min-h-screen py-20 sm:py-32 opacity-0">
-      <div className="space-y-12 sm:space-y-16">
-        <h2 className="text-3xl sm:text-4xl font-light">
-          Recent <span className="text-primary">Thoughts</span>
-        </h2>
+    <section
+      id="thoughts"
+      data-observe="section"
+      className="relative min-h-screen py-20 sm:py-32 opacity-0"
+    >
+      {/* Glow effect background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 
+      <div className="relative space-y-12 sm:space-y-16">
+        {/* Heading */}
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl sm:text-5xl font-light">
+            Recent <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">Thoughts</span>
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Insights, deep dives, and learnings from my journey in mobile and app development.
+          </p>
+        </div>
+
+        {/* Cards Grid */}
         <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
           {THOUGHTS.map((t) => (
             <ThoughtCard key={t.title} t={t} />
