@@ -4,16 +4,16 @@ import { ExperienceItem } from "@/components/items/ExperienceItem";
 
 const EXPERIENCES = [
   {
-    year: "2025 - Present",
-    role: "Jinior Mobile Developer",
+    year: "JUN-2025 - Present",
+    role: "Juniour Mobile App Developer",
     company: "SparkTech Agency",
     description: "Developing and maintaining mobile applications for various clients, focusing on performance and user experience.",
     responsibilities: [
-      "Built and shipped 10+ mobile applications to production",
+      "Built and shipped 3+ mobile applications to production",
       "Collaborated with UI/UX designers to implement pixel-perfect interfaces",
       "Reduced app launch time by 35% through performance optimization"
     ],
-    tech: ["Flutter", "Dart", "GetX", "Firebase", ]
+    tech: ["Flutter", "Dart", "Firebase", ]
   },
  
 ];
@@ -28,7 +28,7 @@ export function ExperienceSection() {
             <h2 className="text-3xl sm:text-4xl font-light">
               Work <span className="text-primary">Experience</span>
             </h2>
-            <div className="text-sm text-muted-foreground font-mono">2020 — Present</div>
+            <div className="text-sm text-muted-foreground font-mono">JUN-2025 — Present</div>
           </div>
 
           <div className="space-y-12">
