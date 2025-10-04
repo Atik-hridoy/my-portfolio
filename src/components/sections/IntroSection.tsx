@@ -4,18 +4,19 @@ import Link from "next/link";
 import { TechPill } from "../pills/TechPill";
 import {
   SiReact,
-  SiSwift,
+  SiPython,
   SiKotlin,
   SiFlutter,
   SiFirebase,
   SiTypescript,
 } from "react-icons/si";
 import { TypeAnimation } from "react-type-animation";
+import { label } from "framer-motion/client";
 
 export function IntroSection() {
   const skills = [
     { label: "React Native", Icon: SiReact },
-
+    { label: "Python", Icon : SiPython},
     { label: "Kotlin", Icon: SiKotlin },
     { label: "Flutter", Icon: SiFlutter },
     { label: "Firebase", Icon: SiFirebase },

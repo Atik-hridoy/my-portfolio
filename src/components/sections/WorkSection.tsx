@@ -8,30 +8,26 @@ const JOBS = [
         role: "Dating App",
         company: "Kindered App",
         description: "Developed a modern dating application with a beautiful UI, real-time features, and smooth animations using Flutter and GetX state management. Implemented user authentication, profile management, and location-based matching.",
-        tech: ["Flutter", "Dart", "GetX", "Firebase", "Google Maps API"],
+        tech: ["Flutter", "Dart","Firebase", "Google Maps API"],
         repo: "https://github.com/Atik-hridoy/kindered_app"
     },
   {
-    year: "2023",
-    role: "iOS Developer",
-    company: "E-commerce Platform",
-    description: "Built native shopping experiences with seamless checkout and real-time inventory.",
-    tech: ["Swift", "SwiftUI", "Core Data"],
+    year: "2025",
+    role: "Hpayy Shopping",
+    company: "Elecktro E-commerce",
+    description: "Developed a cross-platform e-commerce app with product catalog, shopping cart, and user profile features. Implemented responsive design with dark/light theme support and multi-language localization.",
+    tech: ["Flutter", "Dart", ],
+    repo: "https://github.com/Atik-hridoy/elecktro-ecommerce"
   },
   {
     year: "2022",
-    role: "Mobile App Developer",
-    company: "Social Media App",
-    description: "Developed cross-platform features for content sharing and user engagement.",
+    role: "Vendor App",
+    company: "ElectroNic Seller",
+    description: "Developed a Flutter-based electronics marketplace app with product listings, search functionality, and user authentication.",
     tech: ["Flutter", "Dart", "Firebase"],
+    repo: "https://github.com/Atik-hridoy/electroNic_seller"
   },
-  {
-    year: "2020",
-    role: "Junior Android Developer",
-    company: "Fitness App",
-    description: "Created workout tracking features and integrated wearable device APIs.",
-    tech: ["Kotlin", "Jetpack Compose", "Room"],
-  },
+  
 ];
 
 export function WorkSection() {
