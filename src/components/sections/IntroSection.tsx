@@ -15,7 +15,7 @@ import { TypeAnimation } from "react-type-animation";
 export function IntroSection() {
   const skills = [
     { label: "React Native", Icon: SiReact },
-    { label: "Swift", Icon: SiSwift },
+
     { label: "Kotlin", Icon: SiKotlin },
     { label: "Flutter", Icon: SiFlutter },
     { label: "Firebase", Icon: SiFirebase },
