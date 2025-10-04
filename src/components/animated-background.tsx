@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 
 export function AnimatedBackground() {
+  const PARTICLE_COUNT = 80
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -25,20 +26,19 @@ export function AnimatedBackground() {
     }> = []
 
     // Create particles
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 1,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
-        opacity: Math.random() * 0.5 + 0.2,
+        size: 1.5 + Math.random() * 3 + 1,
+        speedX: (Math.random() - 0.5) * 0.2 + Math.random() * 0.35,
+        speedY: (Math.random() - 0.5) * 0.2 + Math.random() * 0.35,
+        opacity: 0.15 + Math.random() * 0.25 + 0.2,
       })
     }
 
     function animate() {
       if (!ctx || !canvas) return
-
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // Draw connections
@@ -90,5 +90,5 @@ export function AnimatedBackground() {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-40" />
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-60" />
 }

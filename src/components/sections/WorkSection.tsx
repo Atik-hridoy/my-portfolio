@@ -3,13 +3,14 @@
 import { JobItem } from "../items/JobItem";
 
 const JOBS = [
-  {
-    year: "2024",
-    role: "Senior Mobile Developer",
-    company: "Tech Startup",
-    description: "Leading mobile architecture for iOS and Android apps with 500K+ active users.",
-    tech: ["React Native", "TypeScript", "Redux"],
-  },
+    {
+        year: "2025",
+        role: "Dating App",
+        company: "Kindered App",
+        description: "Developed a modern dating application with a beautiful UI, real-time features, and smooth animations using Flutter and GetX state management. Implemented user authentication, profile management, and location-based matching.",
+        tech: ["Flutter", "Dart", "GetX", "Firebase", "Google Maps API"],
+        repo: "https://github.com/Atik-hridoy/kindered_app"
+    },
   {
     year: "2023",
     role: "iOS Developer",
@@ -39,7 +40,7 @@ export function WorkSection() {
       <div className="space-y-12 sm:space-y-16">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <h2 className="text-3xl sm:text-4xl font-light">
-            Selected <span className="text-primary">Work</span>
+            Selected <span className="text-primary">Projects</span>
           </h2>
           <div className="text-sm text-muted-foreground font-mono">2020 — 2025</div>
         </div>
