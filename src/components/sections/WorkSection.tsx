@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { gsap } from "gsap";
 import { JobItem } from "../items/JobItem";
 import { PhoneMockup } from "../ui/PhoneMockup";
 
@@ -38,14 +39,69 @@ const JOBS = [
 ];
 
 export function WorkSection() {
-  const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [activeProject, setActiveProject] = useState<number>(0);
+  const [showPhone, setShowPhone] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const phoneRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    // Observe section visibility
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShowPhone(true);
+          } else {
+            setShowPhone(false);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+      }
+    );
+
+    sectionObserver.observe(sectionRef.current);
+
+    return () => {
+      sectionObserver.disconnect();
+    };
+  }, []);
+
+  // Animate phone appearance
+  useEffect(() => {
+    if (!phoneRef.current) return;
+
+    if (showPhone) {
+      gsap.fromTo(
+        phoneRef.current,
+        { scale: 0, opacity: 0, x: 50 },
+        { scale: 1, opacity: 1, x: 0, duration: 0.6, ease: "back.out(1.7)" }
+      );
+    } else {
+      gsap.to(phoneRef.current, {
+        scale: 0,
+        opacity: 0,
+        x: 50,
+        duration: 0.4,
+        ease: "back.in(1.7)",
+      });
+    }
+  }, [showPhone]);
+
+  const handleProjectInView = (index: number) => {
+    setActiveProject(index);
+  };
 
   return (
     <section
+      ref={sectionRef}
       id="work"
       data-observe="section"
       data-gsap-section
-      className="min-h-screen py-20 sm:py-32"
+      className="min-h-screen py-20 sm:py-32 relative"
     >
       <div className="space-y-12 sm:space-y-16">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -69,20 +125,24 @@ export function WorkSection() {
               key={`${job.year}-${job.role}`}
               job={job}
               index={index}
-              onInView={(inView) => setActiveProject(inView ? index : null)}
+              onInView={handleProjectInView}
             />
           ))}
         </div>
       </div>
 
-      {/* Single phone mockup that changes based on active project */}
-      {activeProject !== null && (
+      {/* Phone mockup - fixed position, always rendered */}
+      <div
+        ref={phoneRef}
+        className="hidden xl:block fixed right-8 top-1/2 -translate-y-1/2 z-20"
+        style={{ opacity: 0, transform: "scale(0)" }}
+      >
         <PhoneMockup
-          color={JOBS[activeProject].color || "from-cyan-500 via-blue-500 to-purple-500"}
+          color={JOBS[activeProject].color}
           projectName={JOBS[activeProject].role}
-          isVisible={true}
+          isVisible={showPhone}
         />
-      )}
+      </div>
     </section>
   );
 }

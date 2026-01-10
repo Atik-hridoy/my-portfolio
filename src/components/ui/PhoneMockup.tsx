@@ -15,40 +15,40 @@ export function PhoneMockup({ color, projectName, isVisible }: PhoneMockupProps)
   useEffect(() => {
     if (!phoneRef.current) return;
 
-    if (isVisible) {
-      gsap.fromTo(
-        phoneRef.current,
-        {
-          scale: 0,
-          rotateY: -90,
-          opacity: 0,
-          x: 100,
-        },
-        {
-          scale: 1,
-          rotateY: 0,
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: "back.out(1.7)",
-        }
-      );
-    } else {
-      gsap.to(phoneRef.current, {
-        scale: 0,
-        rotateY: 90,
+    // Initial animation on mount
+    gsap.fromTo(
+      phoneRef.current,
+      {
+        scale: 0.8,
         opacity: 0,
-        x: 100,
-        duration: 0.5,
-        ease: "back.in(1.7)",
-      });
+      },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+      }
+    );
+  }, []);
+
+  // Animate content change
+  useEffect(() => {
+    if (!phoneRef.current) return;
+
+    const content = phoneRef.current.querySelector('.phone-content');
+    if (content) {
+      gsap.fromTo(
+        content,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }
+      );
     }
-  }, [isVisible]);
+  }, [projectName, color]);
 
   return (
     <div
       ref={phoneRef}
-      className="fixed right-8 top-1/2 -translate-y-1/2 z-20 hidden xl:block pointer-events-none"
+      className="w-full flex justify-center pointer-events-none"
       style={{
         transformStyle: "preserve-3d",
         perspective: "1000px",
@@ -61,45 +61,45 @@ export function PhoneMockup({ color, projectName, isVisible }: PhoneMockupProps)
         }}
       >
         {/* Phone frame */}
-        <div className="relative w-[220px] h-[440px] bg-gradient-to-br from-gray-900 to-black rounded-[2.5rem] p-2.5 shadow-2xl border-[3px] border-gray-800">
+        <div className="relative w-[200px] h-[400px] bg-gradient-to-br from-gray-900 to-black rounded-[2.2rem] p-2 shadow-2xl border-[3px] border-gray-800">
           {/* Notch */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-b-3xl z-10" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-4 bg-black rounded-b-3xl z-10" />
 
           {/* Screen */}
-          <div className="relative w-full h-full bg-gradient-to-br from-gray-950 to-black rounded-[2rem] overflow-hidden">
+          <div className="relative w-full h-full bg-gradient-to-br from-gray-950 to-black rounded-[1.8rem] overflow-hidden">
             {/* Screen glow */}
             <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-20 animate-pulse`} />
 
             {/* App content placeholder */}
-            <div className="relative w-full h-full p-4 flex flex-col items-center justify-center">
+            <div className="phone-content relative w-full h-full p-3 flex flex-col items-center justify-center">
               {/* Status bar */}
-              <div className="absolute top-6 left-0 right-0 px-6 flex justify-between text-white text-[10px]">
+              <div className="absolute top-5 left-0 right-0 px-5 flex justify-between text-white text-[9px]">
                 <span>9:41</span>
                 <div className="flex gap-1">
-                  <div className="w-3 h-2.5 border border-white/50 rounded-sm" />
-                  <div className="w-0.5 h-2.5 bg-white/50 rounded-sm" />
+                  <div className="w-2.5 h-2 border border-white/50 rounded-sm" />
+                  <div className="w-0.5 h-2 bg-white/50 rounded-sm" />
                 </div>
               </div>
 
               {/* App preview */}
-              <div className="flex-1 flex flex-col items-center justify-center space-y-4 mt-6">
+              <div className="flex-1 flex flex-col items-center justify-center space-y-3 mt-5">
                 {/* App icon */}
-                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${color} shadow-lg flex items-center justify-center`}>
-                  <span className="text-2xl font-bold text-white">
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${color} shadow-lg flex items-center justify-center`}>
+                  <span className="text-xl font-bold text-white">
                     {projectName.charAt(0)}
                   </span>
                 </div>
 
                 {/* App name */}
                 <div className="text-center">
-                  <h3 className="text-white font-semibold text-sm mb-1.5">
+                  <h3 className="text-white font-semibold text-xs mb-1">
                     {projectName}
                   </h3>
                   <div className="flex gap-0.5 justify-center">
                     {[...Array(5)].map((_, i) => (
                       <svg
                         key={i}
-                        className="w-3 h-3 text-yellow-400"
+                        className="w-2.5 h-2.5 text-yellow-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -110,11 +110,11 @@ export function PhoneMockup({ color, projectName, isVisible }: PhoneMockupProps)
                 </div>
 
                 {/* Mock UI elements */}
-                <div className="w-full space-y-2 px-3">
+                <div className="w-full space-y-1.5 px-2">
                   {[...Array(3)].map((_, i) => (
                     <div
                       key={i}
-                      className={`h-12 rounded-lg bg-gradient-to-r ${color} opacity-30 animate-pulse`}
+                      className={`h-10 rounded-lg bg-gradient-to-r ${color} opacity-30 animate-pulse`}
                       style={{ animationDelay: `${i * 0.2}s` }}
                     />
                   ))}
@@ -122,7 +122,7 @@ export function PhoneMockup({ color, projectName, isVisible }: PhoneMockupProps)
               </div>
 
               {/* Bottom indicator */}
-              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-24 h-1 bg-white/30 rounded-full" />
+              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-20 h-0.5 bg-white/30 rounded-full" />
             </div>
 
             {/* Screen reflection */}
@@ -130,28 +130,33 @@ export function PhoneMockup({ color, projectName, isVisible }: PhoneMockupProps)
           </div>
 
           {/* Side buttons */}
-          <div className="absolute -left-0.5 top-20 w-0.5 h-10 bg-gray-700 rounded-l" />
-          <div className="absolute -left-0.5 top-32 w-0.5 h-12 bg-gray-700 rounded-l" />
-          <div className="absolute -right-0.5 top-28 w-0.5 h-12 bg-gray-700 rounded-r" />
+          <div className="absolute -left-0.5 top-16 w-0.5 h-8 bg-gray-700 rounded-l" />
+          <div className="absolute -left-0.5 top-28 w-0.5 h-10 bg-gray-700 rounded-l" />
+          <div className="absolute -right-0.5 top-24 w-0.5 h-10 bg-gray-700 rounded-r" />
         </div>
 
         {/* Phone shadow */}
-        <div className="absolute inset-0 -z-10 blur-3xl opacity-50">
-          <div className={`w-full h-full bg-gradient-to-br ${color} rounded-[2.5rem]`} />
+        <div className="absolute inset-0 -z-10 blur-2xl opacity-40">
+          <div className={`w-full h-full bg-gradient-to-br ${color} rounded-[2.2rem]`} />
         </div>
 
         {/* Floating particles */}
         <div className="absolute inset-0 -z-5">
-          {[...Array(6)].map((_, i) => (
+          {[
+            { top: 74.9, left: 0.18, color: "#06b6d4", delay: 0 },
+            { top: 48.5, left: 63.8, color: "#3b82f6", delay: 0.3 },
+            { top: 57.2, left: 58.7, color: "#8b5cf6", delay: 0.6 },
+            { top: 40.7, left: 92, color: "#06b6d4", delay: 0.9 },
+          ].map((particle, i) => (
             <div
               key={i}
-              className="absolute w-1.5 h-1.5 rounded-full animate-float"
+              className="absolute w-1 h-1 rounded-full animate-float"
               style={{
-                background: ["#06b6d4", "#3b82f6", "#8b5cf6"][i % 3],
-                top: `${20 + Math.random() * 60}%`,
-                left: `${-20 + Math.random() * 140}%`,
-                animationDelay: `${i * 0.3}s`,
-                boxShadow: `0 0 8px ${["#06b6d4", "#3b82f6", "#8b5cf6"][i % 3]}`,
+                background: particle.color,
+                top: `${particle.top}%`,
+                left: `${particle.left}%`,
+                animationDelay: `${particle.delay}s`,
+                boxShadow: `0 0 6px ${particle.color}`,
               }}
             />
           ))}
