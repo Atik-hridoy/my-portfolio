@@ -20,7 +20,7 @@ export function ExperienceItem({ experience, isLast }: ExperienceItemProps) {
   const { year, role, company, description, responsibilities, tech } = experience;
 
   return (
-    <div className="group relative grid lg:grid-cols-12 gap-4 sm:gap-8">
+    <div data-gsap-item className="group relative grid lg:grid-cols-12 gap-4 sm:gap-8">
       {/* Year */}
       <div className="lg:col-span-2">
         <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-primary transition-colors duration-500">

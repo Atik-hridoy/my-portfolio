@@ -27,6 +27,7 @@ export function IntroSection() {
     <header
       id="intro"
       data-observe="section"
+      data-gsap-section
       className="min-h-[90vh] flex items-center justify-center py-12"
     >
       <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full max-w-7xl mx-auto px-4 text-center sm:text-left">
@@ -50,8 +51,8 @@ export function IntroSection() {
                     "Atik",
                     1000,
                     "Mobile App",
-                    1000,
-                    "Flutter",
+                    // 1000,
+                    // "Flutter",
                     1000,
                     "Atik",
                     1000,
@@ -70,8 +71,8 @@ export function IntroSection() {
                     "Hridoy",
                     500,
                     "Developer",
-                    1000,
-                    "Expert",
+                    // 1000,
+                    // "Expert",
                     1000,
                     "Hridoy",
                     1000,

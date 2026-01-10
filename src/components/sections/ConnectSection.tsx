@@ -14,12 +14,13 @@ export function ConnectSection() {
     <section
       id="connect"
       data-observe="section"
-      className="py-20 sm:py-32 opacity-0"
+      data-gsap-section
+      className="py-20 sm:py-32"
     >
       <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
         {/* LEFT SIDE */}
         <div className="space-y-6 sm:space-y-8">
-          <h2 className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+          <h2 data-gsap-heading className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
             Let's <span className="font-semibold">Connect</span>
           </h2>
 

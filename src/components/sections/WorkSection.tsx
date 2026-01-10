@@ -32,13 +32,21 @@ const JOBS = [
 
 export function WorkSection() {
   return (
-    <section id="work" data-observe="section" className="min-h-screen py-20 sm:py-32 opacity-0">
+    <section id="work" data-observe="section" data-gsap-section className="min-h-screen py-20 sm:py-32">
       <div className="space-y-12 sm:space-y-16">
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <h2 className="text-3xl sm:text-4xl font-light">
-            Selected <span className="text-primary">Projects</span>
+          <h2
+            data-gsap-heading
+            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+          >
+            Selected <span className="font-semibold">Projects</span>
           </h2>
-          <div className="text-sm text-muted-foreground font-mono">2020 — 2025</div>
+          <div
+            data-gsap-heading
+            className="text-sm text-muted-foreground font-mono"
+          >
+            2020 — 2025
+          </div>
         </div>
 
         <div className="space-y-8 sm:space-y-12">

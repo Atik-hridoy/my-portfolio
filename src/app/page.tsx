@@ -2,13 +2,14 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { AnimatedBackground } from "@/components/animated-background";
-import { CodeRain } from "@/components/code-rain";
 import { useThemeClass } from "@/hooks/useThemeClass";
 import { useCursorGlow } from "@/hooks/useCursorGlow";
 import { useSectionObserver } from "@/hooks/useSectionObserver";
+import { useGSAPScroll } from "@/hooks/useGSAPScroll";
 import { GlowCursor } from "@/components/GlowCursor";
 import { SectionDotsNav } from "@/components/SectionDotsNav";
 import { FooterControls } from "@/components/FooterControls";
+import { CodingAvatar } from "@/components/CodingAvatar";
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { WorkSection } from "@/components/sections/WorkSection";
@@ -22,6 +23,7 @@ export default function Home() {
 
   useThemeClass(isDark);
   const { x, y } = useCursorGlow();
+  useGSAPScroll();
 
   const sections = useMemo(() => ["intro", "experience", "work", "skills", "thoughts", "connect"], []);
   useSectionObserver({
@@ -37,6 +39,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <AnimatedBackground />
       <GlowCursor x={x} y={y} />
+      <CodingAvatar />
 
       <SectionDotsNav sections={sections} activeId={activeSection} onJump={scrollToSection} />
 

@@ -13,7 +13,7 @@ type Job = {
 
 export const JobItem = memo(function JobItem({ job }: { job: Job }) {
   return (
-    <div className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-primary/50 transition-all duration-500 rounded-lg hover:bg-card/20 hover:px-6">
+    <div data-gsap-item className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-primary/50 transition-all duration-500 rounded-lg hover:bg-card/20 hover:px-6">
       <div className="lg:col-span-2">
         <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-primary transition-colors duration-500">
           {job.year}

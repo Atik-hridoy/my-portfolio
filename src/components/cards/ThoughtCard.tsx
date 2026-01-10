@@ -6,11 +6,22 @@ type Thought = {
   excerpt: string;
   date: string;
   readTime: string;
+  content?: string;
 };
 
-export const ThoughtCard = memo(function ThoughtCard({ t }: { t: Thought }) {
+type ThoughtCardProps = {
+  t: Thought;
+  onClick: () => void;
+};
+
+export const ThoughtCard = memo(function ThoughtCard({
+  t,
+  onClick,
+}: ThoughtCardProps) {
   return (
     <article
+      data-gsap-card
+      onClick={onClick}
       className="group relative p-6 sm:p-8 border border-border/50 rounded-2xl 
       bg-card/20 backdrop-blur-lg 
       transition-all duration-500 cursor-pointer

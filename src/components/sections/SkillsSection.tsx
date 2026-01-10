@@ -3,10 +3,8 @@
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from "recharts";
 import { motion } from "framer-motion";
 import {
-  SiReact,
   SiFlutter,
   SiFirebase,
-  SiKotlin,
   SiGit,
   SiDart,
   SiPython,
@@ -15,16 +13,16 @@ import {
 } from "react-icons/si";
 
 const skillsData = [
-  { subject: "React Native", A: 60, fullMark: 100, icon: <SiReact className="w-5 h-5" /> },
+  //{ subject: "React Native", A: 60, fullMark: 100, icon: <SiReact className="w-5 h-5" /> },
   { subject: "Flutter", A: 85, fullMark: 100, icon: <SiFlutter className="w-5 h-5" /> },
   //{ subject: "JavaScript", A: 40, fullMark: 100, icon: <SiJavascript className="w-5 h-5" /> },
   { subject: "Firebase", A: 80, fullMark: 100, icon: <SiFirebase className="w-5 h-5" /> },
-  { subject: "Kotlin", A: 50, fullMark: 100, icon: <SiKotlin className="w-5 h-5" /> },
+  //{ subject: "Kotlin", A: 50, fullMark: 100, icon: <SiKotlin className="w-5 h-5" /> },
   { subject: "Git", A: 85, fullMark: 100, icon: <SiGit className="w-5 h-5" /> },
   { subject: "Dart", A: 85, fullMark: 100, icon: <SiDart className="w-5 h-5" /> },
-  { subject: "Python", A: 85, fullMark: 100, icon: <SiPython className="w-5 h-5" /> },
-  { subject: "Node", A: 85, fullMark: 100, icon: <SiTsnode className="w-5 h-5" /> },
-  { subject: "Django", A: 85, fullMark: 100, icon: <SiDjango className="w-5 h-5" /> },
+  { subject: "Python", A: 65, fullMark: 100, icon: <SiPython className="w-5 h-5" /> },
+  { subject: "Node", A: 45, fullMark: 100, icon: <SiTsnode className="w-5 h-5" /> },
+  { subject: "Django", A: 75, fullMark: 100, icon: <SiDjango className="w-5 h-5" /> },
 ];
 
 const CustomPolarAngleAxis = (props: any) => {
@@ -53,15 +51,22 @@ const CustomPolarAngleAxis = (props: any) => {
 
 export function SkillsSection() {
   return (
-    <section id="skills" data-observe="section" className="py-20 sm:py-32 opacity-0">
+    <section id="skills" data-observe="section" data-gsap-section className="py-20 sm:py-32">
       <div className="max-w-7xl mx-auto px-4">
         {/* Section Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent drop-shadow-lg">
+          <h2
+            data-gsap-heading
+            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+          >
             My <span className="font-semibold">Skills</span>
           </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            A visual representation of my technical expertise across various technologies and frameworks.
+          <p
+            data-gsap-heading
+            className="mt-4 text-muted-foreground max-w-2xl mx-auto"
+          >
+            A visual representation of my technical expertise across various
+            technologies and frameworks.
           </p>
         </div>
 
