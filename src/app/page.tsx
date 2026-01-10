@@ -9,7 +9,7 @@ import { useGSAPScroll } from "@/hooks/useGSAPScroll";
 import { GlowCursor } from "@/components/GlowCursor";
 import { SectionDotsNav } from "@/components/SectionDotsNav";
 import { FooterControls } from "@/components/FooterControls";
-import { CodingAvatar } from "@/components/CodingAvatar";
+
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
 import { WorkSection } from "@/components/sections/WorkSection";
@@ -39,7 +39,6 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <AnimatedBackground />
       <GlowCursor x={x} y={y} />
-      <CodingAvatar />
 
       <SectionDotsNav sections={sections} activeId={activeSection} onJump={scrollToSection} />
 
