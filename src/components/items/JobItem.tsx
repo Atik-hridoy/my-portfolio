@@ -1,5 +1,5 @@
 "use client";
-import { memo, forwardRef, useEffect, useRef } from "react";
+import { memo, forwardRef } from "react";
 import { TechStack } from "../ui/TechStack";
 
 type Job = {
@@ -18,40 +18,15 @@ export const JobItem = memo(
     {
       job: Job;
       index: number;
-      onInView: (index: number) => void;
+      onHover: (index: number) => void;
     }
-  >(function JobItem({ job, index, onInView }, ref) {
-    const itemRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-      if (!itemRef.current) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
-              onInView(index);
-            }
-          });
-        },
-        {
-          threshold: [0, 0.4, 0.6, 1],
-          rootMargin: "-20% 0px -20% 0px",
-        }
-      );
-
-      observer.observe(itemRef.current);
-
-      return () => {
-        observer.disconnect();
-      };
-    }, [index, onInView]);
-
+  >(function JobItem({ job, index, onHover }, ref) {
     return (
       <div
-        ref={itemRef}
+        ref={ref}
         data-gsap-item
-        className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-primary/50 transition-all duration-500 rounded-lg hover:bg-card/20 hover:px-6"
+        onMouseEnter={() => onHover(index)}
+        className="group grid lg:grid-cols-12 gap-4 sm:gap-8 py-6 sm:py-8 border-b border-border/50 hover:border-primary/50 transition-all duration-500 rounded-lg hover:bg-card/20 hover:px-6 cursor-pointer"
       >
         <div className="lg:col-span-2">
           <div className="text-xl sm:text-2xl font-light text-muted-foreground group-hover:text-primary transition-colors duration-500">
