@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { AnimatedBackground } from "@/components/animated-background";
+import { ParticleBackground } from "@/components/3d/ParticleBackground";
 import { useThemeClass } from "@/hooks/useThemeClass";
 import { useCursorGlow } from "@/hooks/useCursorGlow";
 import { useSectionObserver } from "@/hooks/useSectionObserver";
@@ -38,6 +39,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <AnimatedBackground />
+      <ParticleBackground />
       <GlowCursor x={x} y={y} />
 
       <SectionDotsNav sections={sections} activeId={activeSection} onJump={scrollToSection} />

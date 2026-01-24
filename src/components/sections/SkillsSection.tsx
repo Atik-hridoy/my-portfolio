@@ -13,11 +13,8 @@ import {
 } from "react-icons/si";
 
 const skillsData = [
-  //{ subject: "React Native", A: 60, fullMark: 100, icon: <SiReact className="w-5 h-5" /> },
   { subject: "Flutter", A: 85, fullMark: 100, icon: <SiFlutter className="w-5 h-5" /> },
-  //{ subject: "JavaScript", A: 40, fullMark: 100, icon: <SiJavascript className="w-5 h-5" /> },
   { subject: "Firebase", A: 80, fullMark: 100, icon: <SiFirebase className="w-5 h-5" /> },
-  //{ subject: "Kotlin", A: 50, fullMark: 100, icon: <SiKotlin className="w-5 h-5" /> },
   { subject: "Git", A: 85, fullMark: 100, icon: <SiGit className="w-5 h-5" /> },
   { subject: "Dart", A: 85, fullMark: 100, icon: <SiDart className="w-5 h-5" /> },
   { subject: "Python", A: 65, fullMark: 100, icon: <SiPython className="w-5 h-5" /> },
@@ -83,52 +80,49 @@ export function SkillsSection() {
               Technical Skills Radar
             </h3>
             <div className="relative h-[400px]">
-  <ResponsiveContainer width="100%" height="100%">
-    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={skillsData}>
-      <PolarGrid gridType="circle" stroke="#475569" strokeDasharray="4 4" />
-      <PolarAngleAxis dataKey="subject" tick={<CustomPolarAngleAxis />} />
-      <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: "#94a3b8", fontSize: 10 }} />
-      <Radar
-        name="Proficiency"
-        dataKey="A"
-        stroke="#06b6d4"
-        strokeWidth={2}
-        fill="url(#radarGradient)"
-        fillOpacity={0.7}
-      />
-      <defs>
-        <linearGradient id="radarGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.7} />
-          <stop offset="100%" stopColor="#a855f7" stopOpacity={0.7} />
-        </linearGradient>
-      </defs>
-    </RadarChart>
-  </ResponsiveContainer>
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={skillsData}>
+                  <PolarGrid gridType="circle" stroke="#475569" strokeDasharray="4 4" />
+                  <PolarAngleAxis dataKey="subject" tick={<CustomPolarAngleAxis />} />
+                  <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: "#94a3b8", fontSize: 10 }} />
+                  <Radar
+                    name="Proficiency"
+                    dataKey="A"
+                    stroke="#06b6d4"
+                    strokeWidth={2}
+                    fill="url(#radarGradient)"
+                    fillOpacity={0.7}
+                  />
+                  <defs>
+                    <linearGradient id="radarGradient" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.7} />
+                      <stop offset="100%" stopColor="#a855f7" stopOpacity={0.7} />
+                    </linearGradient>
+                  </defs>
+                </RadarChart>
+              </ResponsiveContainer>
 
-  {/* 🔥 Radar Sweep (sector scanning effect) */}
-  <motion.div
-    className="absolute inset-0 flex items-center justify-center pointer-events-none"
-    animate={{ rotate: 360 }}
-    transition={{ repeat: Infinity, duration: 6, ease: "linear" }}
-    style={{ transformOrigin: "center" }}
-  >
-    <svg width="100%" height="100%" viewBox="0 0 200 200" className="opacity-50">
-      <defs>
-        <radialGradient id="sweepGradient" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="rgba(6,182,212,0.4)" />
-          <stop offset="100%" stopColor="transparent" />
-        </radialGradient>
-      </defs>
-      {/* Arc sector from center */}
-      <path
-        d="M100,100 L200,100 A100,100 0 0,1 170,170 Z"
-        fill="url(#sweepGradient)"
-      />
-    </svg>
-  </motion.div>
-</div>
-
-
+              {/* Radar Sweep */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 6, ease: "linear" }}
+                style={{ transformOrigin: "center" }}
+              >
+                <svg width="100%" height="100%" viewBox="0 0 200 200" className="opacity-50">
+                  <defs>
+                    <radialGradient id="sweepGradient" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="rgba(6,182,212,0.4)" />
+                      <stop offset="100%" stopColor="transparent" />
+                    </radialGradient>
+                  </defs>
+                  <path
+                    d="M100,100 L200,100 A100,100 0 0,1 170,170 Z"
+                    fill="url(#sweepGradient)"
+                  />
+                </svg>
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* Skill Bars */}
@@ -161,7 +155,6 @@ export function SkillsSection() {
                     transition={{ duration: 1.2, delay: 0.5 + index * 0.05 }}
                     className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full"
                   />
-                  {/* shimmer effect */}
                   <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
                 </div>
               </motion.div>

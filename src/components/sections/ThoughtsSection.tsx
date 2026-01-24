@@ -77,9 +77,6 @@ export function ThoughtsSection() {
       data-gsap-section
       className="relative min-h-screen py-20 sm:py-32"
     >
-      {/* Glow effect background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
-
       <div className="relative space-y-12 sm:space-y-16">
         {/* Heading */}
         <div className="text-center space-y-4">
