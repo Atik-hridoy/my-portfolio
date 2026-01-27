@@ -48,6 +48,7 @@ export function ExperienceSection() {
                 key={`${exp.year}-${exp.role}`} 
                 experience={exp} 
                 isLast={index === EXPERIENCES.length - 1}
+                index={index}
               />
             ))}
           </div>
