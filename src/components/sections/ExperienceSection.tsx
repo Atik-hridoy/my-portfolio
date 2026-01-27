@@ -4,18 +4,21 @@ import { ExperienceItem } from "@/components/items/ExperienceItem";
 
 const EXPERIENCES = [
   {
-    year: "JUN-2025 - Present",
-    role: "Juniour Mobile App Developer",
+    year: "JUN 2025 - Present",
+    role: "Flutter Developer (Junior)",
     company: "SparkTech Agency",
-    description: "Developing and maintaining mobile applications for various clients, focusing on performance and user experience.",
+    description: "Developing and maintaining production-ready cross-platform apps using Flutter & Dart following clean architecture.",
     responsibilities: [
-      "Built and shipped 3+ mobile applications to production",
-      "Collaborated with UI/UX designers to implement pixel-perfect interfaces",
-      "Reduced app launch time by 35% through performance optimization"
+      "Translating Figma/Adobe XD designs into pixel-perfect, responsive UIs with Material & Cupertino widgets",
+      "Implementing state management using GetX, Provider and reactive programming",
+      "Handling asynchronous data using FutureBuilder, StreamBuilder, async/await, and robust error handling",
+      "Integrating REST APIs with JSON parsing, authentication flows, and offline caching",
+      "Optimizing widget tree performance, minimizing rebuilds, and leveraging const constructors",
+      "Developing custom reusable widgets, themes, and component libraries for consistent UX",
+      "Collaborating with backend teams and using Git workflows, pull requests, CI/CD pipelines"
     ],
     tech: ["Flutter", "Dart", "Firebase", ]
   },
- 
 ];
 
 
@@ -35,7 +38,7 @@ export function ExperienceSection() {
               data-gsap-heading
               className="text-sm text-muted-foreground font-mono"
             >
-              JUN-2025 — Present
+              JUN 2025 — Present
             </div>
           </div>
 

@@ -20,6 +20,25 @@ type Job = {
 const JOBS: Job[] = [
   {
     year: "2025",
+    role: "Art Exhibition",
+    company: "Digital Art Gallery",
+    description:
+      "An elegant Flutter application for showcasing and exploring digital art exhibitions. Features smooth animations, intuitive navigation, and a beautiful gallery interface for art enthusiasts.",
+    tech: ["Flutter", "Dart"],
+    repo: "https://github.com/Atik-hridoy/Art_Exhibition",
+    color: "from-amber-400 via-orange-400 to-red-400",
+    gradient: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
+    images: [
+      "/projects/tasaneeArt/Launch Screens.png",
+      "/projects/tasaneeArt/Login.png",
+      "/projects/tasaneeArt/Sign up.png",
+      "/projects/tasaneeArt/Personal Information.png",
+      "/projects/tasaneeArt/Collector Details.png",
+      "/projects/tasaneeArt/saved.png",
+    ],
+  },
+  {
+    year: "2025",
     role: "Gift Moment",
     company: "Premium Gifting App",
     description:
@@ -63,6 +82,13 @@ const JOBS: Job[] = [
     repo: "https://github.com/Atik-hridoy/elecktro-ecommerce",
     color: "from-cyan-500 via-blue-500 to-indigo-500",
     gradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+    images: [
+      "/projects/happy_sopping/Spatch.jpg",
+      "/projects/happy_sopping/Spatchn.jpg",
+      "/projects/happy_sopping/Home.jpg",
+      "/projects/happy_sopping/Homee.jpg",
+      "/projects/happy_sopping/Categories.jpg",
+    ],
   },
   {
     year: "2022",
@@ -74,6 +100,11 @@ const JOBS: Job[] = [
     repo: "https://github.com/Atik-hridoy/electroNic_seller",
     color: "from-purple-500 via-violet-500 to-fuchsia-500",
     gradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+    images: [
+      "/projects/vendor/Screenshot 2026-01-27 103322.png",
+      "/projects/vendor/Screenshot 2026-01-27 103828.png",
+      "/projects/vendor/Screenshot 2026-01-27 103848.png",
+    ],
   },
 ];
 

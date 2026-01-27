@@ -36,30 +36,22 @@ export function IntroSection() {
               PORTFOLIO / 2025
             </div>
 
-            <h1
-              className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight"
-            >
+            <h1 className="tracking-tight">
               <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#06b6d4] via-[#a855f7] to-[#ef4444] animate-gradient bg-[length:200%_auto]">
-                <DecryptedText
-                  text="Atik Hridoy"
-                  animateOn="view"
-                  sequential
-                  speed={100}
-                  maxIterations={15}
-                  revealDirection="start"
-                />
+                <span className="font-bold text-5xl sm:text-6xl lg:text-7xl">
+                  <DecryptedText
+                    text="Atik Hridoy"
+                    animateOn="view"
+                    sequential
+                    speed={100}
+                    maxIterations={15}
+                    revealDirection="start"
+                  />
+                </span>
                 <br />
-                <span className="inline-block min-w-[300px] sm:min-w-[400px] lg:min-w-[500px]">
+                <span className="inline-block min-w-[250px] sm:min-w-[350px] lg:min-w-[400px] font-light text-3xl sm:text-4xl lg:text-5xl">
                   <TypeAnimation
-                    sequence={[
-                      "App Developer",
-                      2000,
-                      "Flutter Expert",
-                      2000,
-                      "App Creator",
-                      2000,
-                      
-                    ]}
+                    sequence={["Flutter Developer", 2000, "App Creator", 2000]}
                     wrapper="span"
                     speed={50}
                     style={{ display: "inline-block" }}

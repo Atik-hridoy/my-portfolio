@@ -8,89 +8,89 @@ export function Logo() {
   }, []);
 
   return (
-    <div className="fixed top-6 right-6 z-50 group">
-      <div className="relative w-32 h-32 flex items-center justify-center">
-        
-        {/* Simple rotating ring - smaller */}
-        <div className="absolute inset-6 rounded-full border border-cyan-500/20 animate-spin-slow" />
+    <div className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 group">
+      <div className="relative w-20 h-20 sm:w-32 sm:h-32 flex items-center justify-center">
         
         {/* Main Logo */}
         <svg
-          width="60"
-          height="60"
-          viewBox="0 0 160 160"
+          width="40"
+          height="40"
+          viewBox="0 0 200 200"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="relative z-10"
+          className="relative z-10 sm:w-[60px] sm:h-[60px]"
         >
-          <defs>
-            {/* Simple animated gradient */}
-            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#06b6d4">
-                <animate
-                  attributeName="stop-color"
-                  values="#06b6d4; #8b5cf6; #f97316; #06b6d4"
-                  dur="4s"
-                  repeatCount="indefinite"
-                />
-              </stop>
-              <stop offset="50%" stopColor="#8b5cf6">
-                <animate
-                  attributeName="stop-color"
-                  values="#8b5cf6; #f97316; #06b6d4; #8b5cf6"
-                  dur="4s"
-                  repeatCount="indefinite"
-                />
-              </stop>
-              <stop offset="100%" stopColor="#f97316">
-                <animate
-                  attributeName="stop-color"
-                  values="#f97316; #06b6d4; #8b5cf6; #f97316"
-                  dur="4s"
-                  repeatCount="indefinite"
-                />
-              </stop>
-            </linearGradient>
-            
-            {/* Glow filter */}
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
+          {/* White Badge - theme aware */}
+          <path 
+            d="M100 20C120 20 140 30 150 50C170 60 180 80 180 100C180 120 170 140 150 150C140 170 120 180 100 180C80 180 60 170 50 150C30 140 20 120 20 100C20 80 30 60 50 50C60 30 80 20 100 20 Z"
+            className="fill-white/20 dark:fill-white/10"
+          />
           
-          {/* Letter A - Larger and centered */}
-          <g filter="url(#glow)">
-            {/* Left leg of A */}
-            <path
-              d="M 50 130 L 80 30 L 110 130"
-              stroke="url(#logoGradient)"
-              strokeWidth="7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
+          {/* Compass rotating */}
+          <g>
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 100 100"
+              to="360 100 100"
+              dur="1.6s"
+              repeatCount="indefinite"
             />
-            {/* Crossbar of A */}
-            <path
-              d="M 60 95 L 100 95"
-              stroke="url(#logoGradient)"
-              strokeWidth="7"
-              strokeLinecap="round"
-              fill="none"
+            
+            {/* A shape */}
+            <path 
+              d="M100 45 L70 145 L85 145 L100 105 L115 145 L130 145 Z"
+              fill="#3B82F6"
+            />
+            
+            {/* Cross bar */}
+            <rect 
+              x="88" 
+              y="95" 
+              width="24" 
+              height="10" 
+              rx="5"
+              fill="#2563EB"
             />
           </g>
+          
+          {/* Center dot */}
+          <circle cx="100" cy="60" r="7" fill="#111827">
+            <animate 
+              attributeName="r"
+              values="6;9;6"
+              dur="1s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          
+          {/* Android head hint */}
+          <circle cx="122" cy="95" r="10" fill="#22C55E"/>
+          <line 
+            x1="117" 
+            y1="85" 
+            x2="112" 
+            y2="78" 
+            stroke="#22C55E" 
+            strokeWidth="2"
+          />
+          <line 
+            x1="127" 
+            y1="85" 
+            x2="132" 
+            y2="78" 
+            stroke="#22C55E" 
+            strokeWidth="2"
+          />
         </svg>
 
-        {/* Simple floating particles */}
+        {/* Simple floating particles - hidden on mobile */}
         {mounted && (
           <>
-            <div className="absolute top-4 left-4 w-2 h-2 bg-cyan-400 rounded-full animate-float" />
-            <div className="absolute top-6 right-5 w-1.5 h-1.5 bg-purple-400 rounded-full animate-float" style={{ animationDelay: '1s' }} />
-            <div className="absolute bottom-5 left-6 w-1.5 h-1.5 bg-orange-400 rounded-full animate-float" style={{ animationDelay: '2s' }} />
-            <div className="absolute bottom-4 right-4 w-2 h-2 bg-cyan-400 rounded-full animate-float" style={{ animationDelay: '1.5s' }} />
+            <div className="hidden sm:block absolute top-4 left-4 w-2 h-2 bg-cyan-400 rounded-full animate-float" />
+            <div className="hidden sm:block absolute top-6 right-5 w-1.5 h-1.5 bg-purple-400 rounded-full animate-float" style={{ animationDelay: '1s' }} />
+            <div className="hidden sm:block absolute bottom-5 left-6 w-1.5 h-1.5 bg-orange-400 rounded-full animate-float" style={{ animationDelay: '2s' }} />
+            <div className="hidden sm:block absolute bottom-4 right-4 w-2 h-2 bg-cyan-400 rounded-full animate-float" style={{ animationDelay: '1.5s' }} />
           </>
         )}
 
@@ -98,8 +98,8 @@ export function Logo() {
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-purple-500/0 to-orange-500/0 group-hover:from-cyan-500/20 group-hover:via-purple-500/20 group-hover:to-orange-500/20 rounded-full blur-xl transition-all duration-500" />
       </div>
       
-      {/* Simple Tooltip */}
-      <div className="absolute top-full right-0 mt-4 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none transform group-hover:translate-y-0 translate-y-2">
+      {/* Simple Tooltip - hidden on mobile */}
+      <div className="hidden sm:block absolute top-full right-0 mt-4 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none transform group-hover:translate-y-0 translate-y-2">
         <div className="relative px-6 py-3 bg-zinc-900/95 backdrop-blur-xl border border-zinc-800 rounded-xl shadow-2xl">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-orange-500/10 rounded-xl" />
           <span className="relative text-base font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-orange-500 bg-clip-text text-transparent whitespace-nowrap">
