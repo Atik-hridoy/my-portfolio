@@ -12,6 +12,7 @@ import { SectionDotsNav } from "@/components/SectionDotsNav";
 import { FooterControls } from "@/components/FooterControls";
 import { Logo } from "@/components/Logo";
 import { Loader } from "@/components/Loader";
+import { MobileHeader } from "@/components/MobileHeader";
 
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
@@ -70,10 +71,13 @@ export default function Home() {
       <AnimatedBackground />
       <GlowCursor x={x} y={y} />
       <Logo />
+      
+      {/* Mobile Header - shows on scroll with HRIDOY letters */}
+      <MobileHeader activeSection={activeSection} onJump={scrollToSection} />
 
       <SectionDotsNav sections={sections} activeId={activeSection} onJump={scrollToSection} />
 
-      <main className="max-w-5xl mx-auto relative z-10 overflow-visible ">
+      <main className="max-w-5xl mx-auto relative z-10 overflow-visible">
         <IntroSection />
         <ExperienceSection />
         <WorkSection />

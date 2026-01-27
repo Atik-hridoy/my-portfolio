@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
 import { TechPill } from "@/components/pills/TechPill";
@@ -29,7 +29,21 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
 
+  // Auto-rotate images
+  useEffect(() => {
+    if (!job.images || job.images.length <= 1) return;
+    
+    const interval = setInterval(() => {
+      setExpandedImageId((prev) => (prev + 1) % job.images!.length);
+    }, 3000); // Change every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [job.images]);
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // Disable 3D tilt on mobile for better performance
+    if (window.innerWidth < 768) return;
+    
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -46,26 +60,26 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
       className="group relative"
       style={{
         animationDelay: `${index * 100}ms`,
-        transform: isHovered
+        transform: isHovered && window.innerWidth >= 768
           ? `perspective(1000px) rotateX(${(mousePosition.y - 50) / 20}deg) rotateY(${(mousePosition.x - 50) / 20}deg) translateZ(10px)`
           : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)',
         transition: 'transform 0.3s ease-out',
       }}
     >
-      {/* Animated background glow */}
+      {/* Animated background glow - Always visible on mobile */}
       <div
-        className="absolute -inset-0.5 bg-gradient-to-r opacity-0 group-hover:opacity-100 blur-xl transition-all duration-700 rounded-2xl"
+        className="absolute -inset-0.5 bg-gradient-to-r opacity-50 md:opacity-0 md:group-hover:opacity-100 blur-xl transition-all duration-700 rounded-2xl"
         style={{
           background: job.gradient,
         }}
       />
 
       {/* Main card */}
-      <div className="relative bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-500 hover:border-zinc-700 h-full flex flex-col">
+      <div className="relative bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 md:hover:border-zinc-700 rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col">
         {/* Spotlight effect */}
         {isHovered && (
           <div
-            className="pointer-events-none absolute opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            className="pointer-events-none absolute opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden md:block"
             style={{
               background: `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(6, 182, 212, 0.1), transparent 40%)`,
               width: "100%",
@@ -86,7 +100,7 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
                 </div>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-1.5 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 transition-all duration-300">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-1.5 md:group-hover:text-transparent md:group-hover:bg-clip-text md:group-hover:bg-gradient-to-r md:group-hover:from-cyan-400 md:group-hover:to-purple-500 transition-all duration-300">
                 {job.role}
               </h3>
 
@@ -134,6 +148,7 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
                       animate={{ flex: isExpanded ? 3 : 1 }}
                       transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                       onMouseEnter={() => setExpandedImageId(idx)}
+                      onClick={() => setExpandedImageId(idx)}
                     >
                       <div className="absolute inset-0">
                         <Image
@@ -167,9 +182,8 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
           {/* Footer with animated line */}
           <div className="relative pt-4 border-t border-zinc-800 mt-auto">
             <div
-              className="absolute top-0 left-0 h-0.5 bg-gradient-to-r transition-all duration-500 ease-out"
+              className="absolute top-0 left-0 h-0.5 bg-gradient-to-r transition-all duration-500 ease-out w-full md:w-0 md:group-hover:w-full"
               style={{
-                width: isHovered ? "100%" : "0%",
                 background: job.gradient,
               }}
             />

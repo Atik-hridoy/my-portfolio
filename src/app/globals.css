@@ -129,8 +129,32 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
+  html {
+    /* Smooth scrolling for better mobile experience */
+    scroll-behavior: smooth;
+    /* Prevent scroll bounce on iOS */
+    overscroll-behavior-y: none;
+    /* Enable hardware acceleration */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
   body {
     @apply bg-background text-foreground;
+    /* Optimize for mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent text size adjustment on mobile */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Optimize all animated elements for mobile */
+  @media (max-width: 768px) {
+    * {
+      /* Reduce motion for better performance on mobile */
+      animation-duration: 0.3s !important;
+      transition-duration: 0.2s !important;
+    }
   }
 }
 
@@ -157,6 +181,31 @@
   
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Optimize animations for mobile performance */
+  @media (max-width: 768px) {
+    .animate-fade-in-up {
+      animation-duration: 0.4s;
+    }
+  }
+
+  /* GPU acceleration for smooth animations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  /* Optimize heavy animations */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 
   .animate-draw {
@@ -220,6 +269,19 @@
     75% {
       transform: translateY(-15px) translateX(3px);
       opacity: 0.6;
+    }
+  }
+
+  /* Disable float animation on mobile for better performance */
+  @media (max-width: 768px) {
+    .animate-float {
+      animation: none;
+      opacity: 0.5;
+    }
+    
+    .animate-spin-slow,
+    .animate-spin-reverse {
+      animation-duration: 12s;
     }
   }
 }

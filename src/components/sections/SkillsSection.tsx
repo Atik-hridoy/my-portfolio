@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from "recharts";
 import { motion } from "framer-motion";
 import {
@@ -40,7 +40,7 @@ const CustomPolarAngleAxis = (props: any) => {
       
       {/* Icon container with gradient border */}
       <foreignObject x="-18" y="7" width="36" height="36">
-        <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${skill?.color} p-0.5 animate-pulse`}>
+        <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${skill?.color} p-0.5`}>
           <div className="w-full h-full bg-zinc-900 rounded-full flex items-center justify-center text-white">
             {skill?.icon}
           </div>
@@ -64,6 +64,14 @@ const CustomPolarAngleAxis = (props: any) => {
 
 export function SkillsSection() {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section id="skills" data-observe="section" data-gsap-section className="py-20 sm:py-32 relative overflow-hidden">
@@ -92,40 +100,42 @@ export function SkillsSection() {
 
         {/* Next Level Radar */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: isMobile ? 0.4 : 0.8 }}
           className="relative max-w-4xl mx-auto"
         >
-          {/* Outer glow rings */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <motion.div
-              className="absolute w-[600px] h-[600px] rounded-full border border-cyan-500/20"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.3, 0.1, 0.3],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            <motion.div
-              className="absolute w-[650px] h-[650px] rounded-full border border-purple-500/20"
-              animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.3, 0.1, 0.3],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.5,
-              }}
-            />
-          </div>
+          {/* Outer glow rings - Disabled on mobile */}
+          {!isMobile && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                className="absolute w-[600px] h-[600px] rounded-full border border-cyan-500/20"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.3, 0.1, 0.3],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <motion.div
+                className="absolute w-[650px] h-[650px] rounded-full border border-purple-500/20"
+                animate={{
+                  scale: [1, 1.15, 1],
+                  opacity: [0.3, 0.1, 0.3],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5,
+                }}
+              />
+            </div>
+          )}
 
           {/* Main radar container - Floating */}
           <div className="relative group">
@@ -145,8 +155,8 @@ export function SkillsSection() {
               </div>
 
               <div className="relative h-[500px]">
-                {/* Floating particles - Fixed positions to avoid hydration mismatch */}
-                {[
+                {/* Floating particles - Reduced on mobile for performance */}
+                {!isMobile && [
                   { left: 15, top: 20 },
                   { left: 85, top: 15 },
                   { left: 25, top: 75 },
@@ -187,7 +197,6 @@ export function SkillsSection() {
                     }}
                   />
                 ))}
-
                 <ResponsiveContainer width="100%" height="100%">
                   <RadarChart cx="50%" cy="50%" outerRadius="75%" data={skillsData}>
                     {/* Multiple grid layers for depth */}
@@ -251,47 +260,51 @@ export function SkillsSection() {
                   </RadarChart>
                 </ResponsiveContainer>
 
-                {/* Animated radar sweep - Multiple layers */}
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                  animate={{ rotate: 360 }}
-                  transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
-                  style={{ transformOrigin: "center" }}
-                >
-                  <svg width="100%" height="100%" viewBox="0 0 200 200" className="opacity-40">
-                    <defs>
-                      <radialGradient id="sweepGradient1" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="rgba(6,182,212,0.6)" />
-                        <stop offset="100%" stopColor="transparent" />
-                      </radialGradient>
-                    </defs>
-                    <path
-                      d="M100,100 L200,100 A100,100 0 0,1 170,170 Z"
-                      fill="url(#sweepGradient1)"
-                    />
-                  </svg>
-                </motion.div>
+                {/* Animated radar sweep - Disabled on mobile for performance */}
+                {!isMobile && (
+                  <>
+                    <motion.div
+                      className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+                      style={{ transformOrigin: "center" }}
+                    >
+                      <svg width="100%" height="100%" viewBox="0 0 200 200" className="opacity-40">
+                        <defs>
+                          <radialGradient id="sweepGradient1" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="rgba(6,182,212,0.6)" />
+                            <stop offset="100%" stopColor="transparent" />
+                          </radialGradient>
+                        </defs>
+                        <path
+                          d="M100,100 L200,100 A100,100 0 0,1 170,170 Z"
+                          fill="url(#sweepGradient1)"
+                        />
+                      </svg>
+                    </motion.div>
 
-                {/* Counter-rotating sweep */}
-                <motion.div
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                  animate={{ rotate: -360 }}
-                  transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-                  style={{ transformOrigin: "center" }}
-                >
-                  <svg width="100%" height="100%" viewBox="0 0 200 200" className="opacity-30">
-                    <defs>
-                      <radialGradient id="sweepGradient2" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="rgba(168,85,247,0.5)" />
-                        <stop offset="100%" stopColor="transparent" />
-                      </radialGradient>
-                    </defs>
-                    <path
-                      d="M100,100 L100,0 A100,100 0 0,1 170,30 Z"
-                      fill="url(#sweepGradient2)"
-                    />
-                  </svg>
-                </motion.div>
+                    {/* Counter-rotating sweep */}
+                    <motion.div
+                      className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                      animate={{ rotate: -360 }}
+                      transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+                      style={{ transformOrigin: "center" }}
+                    >
+                      <svg width="100%" height="100%" viewBox="0 0 200 200" className="opacity-30">
+                        <defs>
+                          <radialGradient id="sweepGradient2" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="rgba(168,85,247,0.5)" />
+                            <stop offset="100%" stopColor="transparent" />
+                          </radialGradient>
+                        </defs>
+                        <path
+                          d="M100,100 L100,0 A100,100 0 0,1 170,30 Z"
+                          fill="url(#sweepGradient2)"
+                        />
+                      </svg>
+                    </motion.div>
+                  </>
+                )}
 
                 {/* Center pulse effect */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

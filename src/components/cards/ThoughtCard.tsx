@@ -24,23 +24,23 @@ export const ThoughtCard = memo(function ThoughtCard({
       onClick={onClick}
       className="group relative p-6 sm:p-8 rounded-2xl cursor-pointer overflow-hidden"
     >
-      {/* Holographic border effect */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+      {/* Holographic border effect - Always visible on mobile */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-30 md:opacity-20 md:group-hover:opacity-40 transition-opacity duration-500" />
       <div className="absolute inset-[1px] rounded-2xl bg-background/95 backdrop-blur-xl" />
 
-      {/* Scan line animation */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      {/* Scan line animation - Always visible on mobile */}
+      <div className="absolute inset-0 opacity-30 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent animate-scan" />
       </div>
 
-      {/* Corner accents */}
-      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {/* Corner accents - Always visible on mobile */}
+      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500 opacity-50 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-purple-500 opacity-50 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-blue-500 opacity-50 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500 opacity-50 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
 
-      {/* Glitch effect overlay */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mix-blend-screen">
+      {/* Glitch effect overlay - Disabled on mobile for performance */}
+      <div className="absolute inset-0 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mix-blend-screen hidden md:block">
         <div className="absolute inset-0 bg-cyan-500/5 animate-glitch-1" />
         <div className="absolute inset-0 bg-purple-500/5 animate-glitch-2" />
       </div>
@@ -56,8 +56,8 @@ export const ThoughtCard = memo(function ThoughtCard({
           </span>
         </div>
 
-        {/* Title with glow */}
-        <h3 className="text-lg sm:text-xl font-bold leading-snug transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:via-blue-400 group-hover:to-purple-400">
+        {/* Title with glow - Always gradient on mobile */}
+        <h3 className="text-lg sm:text-xl font-bold leading-snug transition-all duration-300 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 md:text-foreground md:group-hover:text-transparent md:group-hover:bg-clip-text md:group-hover:bg-gradient-to-r md:group-hover:from-cyan-400 md:group-hover:via-blue-400 md:group-hover:to-purple-400">
           {t.title}
         </h3>
 
@@ -116,7 +116,7 @@ export const ThoughtCard = memo(function ThoughtCard({
           }
         }
         .animate-scan {
-          animation: scan 3s linear infinite;
+          animation: scan 8s ease-in-out infinite;
         }
         .animate-glitch-1 {
           animation: glitch-1 0.3s infinite;
