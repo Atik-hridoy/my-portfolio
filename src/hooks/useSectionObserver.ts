@@ -21,10 +21,10 @@ export function useSectionObserver({
       const sections = document.querySelectorAll<HTMLElement>("[data-observe='section']");
       const scrollPosition = window.scrollY + window.innerHeight / 2;
 
-      let activeSection: HTMLElement | null = null;
+      let closestSection: HTMLElement | null = null;
       let minDistance = Infinity;
 
-      sections.forEach((section) => {
+      sections.forEach((section: HTMLElement) => {
         const rect = section.getBoundingClientRect();
         const sectionTop = rect.top + window.scrollY;
         const sectionMiddle = sectionTop + rect.height / 2;
@@ -32,13 +32,16 @@ export function useSectionObserver({
 
         if (distance < minDistance) {
           minDistance = distance;
-          activeSection = section;
+          closestSection = section;
         }
       });
 
-      if (activeSection) {
-        const id = activeSection.getAttribute("id");
-        if (id) onEnter(id);
+      if (closestSection !== null) {
+        const sectionElement = closestSection as HTMLElement;
+        const id = sectionElement.getAttribute("id");
+        if (id) {
+          onEnter(id);
+        }
       }
     };
 
