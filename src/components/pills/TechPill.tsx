@@ -7,6 +7,8 @@ import {
   SiFlutter,
   SiFirebase,
   SiTypescript,
+  SiDart,
+  SiGooglemaps,
 } from "react-icons/si";
 import { IconType } from "react-icons";
 
@@ -17,6 +19,8 @@ const ICON_MAP: Record<string, IconType> = {
   Flutter: SiFlutter,
   Firebase: SiFirebase,
   TypeScript: SiTypescript,
+  Dart: SiDart,
+  "Google Maps API": SiGooglemaps,
 };
 
 const GRADIENTS: Record<string, string> = {
@@ -26,6 +30,8 @@ const GRADIENTS: Record<string, string> = {
   Flutter: "from-blue-400 via-cyan-300 to-teal-300",
   Firebase: "from-yellow-500 via-orange-500 to-red-400",
   TypeScript: "from-blue-600 via-blue-500 to-blue-400",
+  Dart: "from-cyan-500 via-blue-500 to-indigo-500",
+  "Google Maps API": "from-green-500 via-emerald-500 to-teal-400",
 };
 
 export const TechPill = memo(function TechPill({ label }: { label: string }) {
@@ -38,12 +44,12 @@ export const TechPill = memo(function TechPill({ label }: { label: string }) {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLSpanElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left; // mouse x inside pill
-    const y = e.clientY - rect.top; // mouse y inside pill
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    setTiltY(((x - centerX) / centerX) * 5); // max 5deg
+    setTiltY(((x - centerX) / centerX) * 5);
     setTiltX(-((y - centerY) / centerY) * 5);
   };
 
@@ -54,19 +60,14 @@ export const TechPill = memo(function TechPill({ label }: { label: string }) {
 
   return (
     <span
-      className={`
-        group relative inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium
-        border border-border/30 rounded-full
-        bg-card/40 backdrop-blur-sm
-        text-foreground
+      className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium
+        border border-zinc-700/50 rounded-lg
+        bg-zinc-800/50 backdrop-blur-sm
+        text-zinc-300
         transition-all duration-300 transform
-        hover:scale-105 hover:shadow-lg hover:shadow-${gradient.replace(
-          / /g,
-          "/"
-        )}/50
+        hover:scale-105 hover:border-transparent
         active:scale-95
-        overflow-hidden
-      `}
+        overflow-hidden"
       style={{
         transform: `perspective(200px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`,
       }}
@@ -75,17 +76,26 @@ export const TechPill = memo(function TechPill({ label }: { label: string }) {
     >
       {/* Gradient shimmer */}
       <span
-        className={`
-          absolute inset-0 bg-gradient-to-r ${gradient} 
+        className={`absolute inset-0 bg-gradient-to-r ${gradient} 
           bg-[length:300%_auto] animate-gradient
           opacity-0 group-hover:opacity-100
-          transition-opacity duration-500
-        `}
+          transition-opacity duration-500`}
       />
+      
+      {/* Shimmer effect */}
+      <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <span 
+          className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+          }}
+        />
+      </span>
+      
       {/* Content */}
-      <span className="relative z-10 flex items-center gap-2">
-        {Icon && <Icon className="w-3.5 h-3.5" />}
-        <span>{label}</span>
+      <span className="relative z-10 flex items-center gap-1.5">
+        {Icon && <Icon className="w-3.5 h-3.5 group-hover:text-white transition-colors" />}
+        <span className="group-hover:text-white transition-colors">{label}</span>
       </span>
     </span>
   );

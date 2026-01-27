@@ -3,6 +3,7 @@
 import { useRef, useState, useCallback } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
+import { TechPill } from "@/components/pills/TechPill";
 import { motion } from "framer-motion";
 
 type Job = {
@@ -111,50 +112,10 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
             {job.description}
           </p>
 
-          {/* Tech stack - Enhanced */}
+          {/* Tech stack */}
           <div className="flex flex-wrap gap-2 mb-4">
-            {job.tech.map((tech, i) => (
-              <div
-                key={tech}
-                className="group/tech relative px-3 py-1.5 rounded-lg overflow-hidden transition-all duration-300 hover:scale-105"
-                style={{
-                  animationDelay: `${i * 50}ms`,
-                }}
-              >
-                {/* Animated gradient background */}
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover/tech:opacity-100 transition-opacity duration-300"
-                  style={{
-                    background: job.gradient,
-                  }}
-                />
-                
-                {/* Static background */}
-                <div className="absolute inset-0 bg-zinc-800/50 border border-zinc-700/50 rounded-lg group-hover/tech:border-transparent transition-colors duration-300" />
-                
-                {/* Shimmer effect on hover */}
-                <div className="absolute inset-0 opacity-0 group-hover/tech:opacity-100 transition-opacity duration-500">
-                  <div 
-                    className="absolute inset-0 -translate-x-full group-hover/tech:translate-x-full transition-transform duration-1000 ease-out"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-                    }}
-                  />
-                </div>
-                
-                {/* Text */}
-                <span className="relative text-xs font-medium text-zinc-300 group-hover/tech:text-white transition-colors duration-300 flex items-center gap-1.5">
-                  {/* Tech icon dot */}
-                  <span 
-                    className="w-1.5 h-1.5 rounded-full transition-all duration-300"
-                    style={{
-                      background: job.gradient,
-                      boxShadow: '0 0 8px currentColor',
-                    }}
-                  />
-                  {tech}
-                </span>
-              </div>
+            {job.tech.map((tech) => (
+              <TechPill key={tech} label={tech} />
             ))}
           </div>
 
