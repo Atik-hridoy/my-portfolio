@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { FaExternalLinkAlt, FaGithub, FaCode, FaImages, FaTimes } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGithub, FaCode, FaTimes } from "react-icons/fa";
 import Image from "next/image";
+import { EnhancedProjectCard } from "@/components/cards/EnhancedProjectCard";
 
 type Job = {
   year: string;
@@ -44,6 +45,13 @@ const JOBS: Job[] = [
     repo: "https://github.com/Atik-hridoy/kindered_app",
     color: "from-pink-500 via-rose-500 to-red-500",
     gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    images: [
+      "/projects/dateing_app/Screenshot 2026-01-27 011722.png",
+      "/projects/dateing_app/Screenshot 2026-01-27 011743.png",
+      "/projects/dateing_app/Screenshot 2026-01-27 011811.png",
+      "/projects/dateing_app/Screenshot 2026-01-27 011826.png",
+      "/projects/dateing_app/Screenshot 2026-01-27 011841.png",
+    ],
   },
   {
     year: "2025",
@@ -78,6 +86,7 @@ function ProjectCard({ job, index }: ProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -89,6 +98,29 @@ function ProjectCard({ job, index }: ProjectCardProps) {
     });
   };
 
+  const nextImage = () => {
+    if (!job.images) return;
+    setCurrentImageIndex((prev) => (prev + 1) % job.images!.length);
+  };
+
+  const prevImage = () => {
+    if (!job.images) return;
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? job.images!.length - 1 : prev - 1
+    );
+  };
+
+  const goToImage = (index: number) => {
+    setCurrentImageIndex(index);
+  };
+
+  // Reset image index when hover starts
+  useEffect(() => {
+    if (isHovered) {
+      setCurrentImageIndex(0);
+    }
+  }, [isHovered]);
+
   return (
     <>
       <div
@@ -96,10 +128,10 @@ function ProjectCard({ job, index }: ProjectCardProps) {
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="group relative "
+        className="group relative h-full"
         style={{
           animationDelay: `${index * 100}ms`,
-        
+          perspective: '1000px',
         }}
       >
         {/* Animated background glow */}
@@ -110,19 +142,32 @@ function ProjectCard({ job, index }: ProjectCardProps) {
           }}
         />
 
-        {/* Main card */}
-        <div className="relative bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-500 hover:border-zinc-700 h-full flex flex-col">
-          {/* Spotlight effect */}
-          {isHovered && (
-            <div
-              className="pointer-events-none absolute opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{
-                background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, 0.1), transparent 40%)`,
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          )}
+        {/* Flip Container */}
+        <div 
+          className="relative w-full h-full transition-transform duration-700 ease-out"
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: isHovered && job.images && job.images.length > 0 ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          }}
+        >
+          {/* Front Side - Original Card */}
+          <div 
+            className="absolute inset-0 w-full h-full"
+            style={{
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+            }}
+          >
+            <div className="relative bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-500 hover:border-zinc-700 h-full flex flex-col">
+              {/* Spotlight effect */}
+              <div
+                className="pointer-events-none absolute opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
+                style={{
+                  background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, 0.1), transparent 40%)`,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
 
           <div className="relative p-5 sm:p-6">
             {/* Header */}
@@ -147,14 +192,6 @@ function ProjectCard({ job, index }: ProjectCardProps) {
               </div>
 
               <div className="flex gap-2">
-                {job.images && job.images.length > 0 && (
-                  <button
-                    onClick={() => setIsExpanded(true)}
-                    className="p-2 rounded-lg bg-zinc-800/50 border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-300 group/icon"
-                  >
-                    <FaImages className="w-4 h-4 text-zinc-400 group-hover/icon:text-white transition-colors" />
-                  </button>
-                )}
                 <a
                   href={job.repo}
                   target="_blank"
@@ -210,14 +247,116 @@ function ProjectCard({ job, index }: ProjectCardProps) {
         </div>
       </div>
 
-      {/* Image Gallery Modal */}
+      {/* Back Side - Image Carousel */}
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
+          transform: 'rotateY(180deg)',
+        }}
+      >
+        <div className="relative bg-zinc-900/95 backdrop-blur-xl border border-zinc-700 rounded-2xl overflow-hidden h-full flex flex-col">
+          {/* Image Display */}
+          <div className="relative flex-1 p-4">
+            <div className="relative w-full h-full rounded-xl overflow-hidden border border-zinc-800">
+              {job.images && job.images.length > 0 && (
+                <Image
+                  src={job.images[currentImageIndex]}
+                  alt={`${job.role} screenshot ${currentImageIndex + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              )}
+              
+              {/* Navigation Arrows */}
+              {job.images && job.images.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevImage();
+                    }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 backdrop-blur-sm border border-zinc-700 hover:bg-black/80 transition-all z-10"
+                  >
+                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextImage();
+                    }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 backdrop-blur-sm border border-zinc-700 hover:bg-black/80 transition-all z-10"
+                  >
+                    <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </>
+              )}
+
+              {/* Image Counter */}
+              {job.images && job.images.length > 0 && (
+                <div className="absolute top-3 left-3 px-3 py-1.5 rounded-lg bg-black/60 backdrop-blur-sm border border-zinc-700">
+                  <span className="text-sm text-white font-medium">
+                    {currentImageIndex + 1} / {job.images.length}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Bottom Info */}
+          <div className="p-4 border-t border-zinc-800">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <h3 className="text-lg font-bold text-white mb-1">{job.role}</h3>
+                <p className="text-sm text-zinc-400">{job.company}</p>
+              </div>
+              <div className={`px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${job.color} text-white`}>
+                {job.year}
+              </div>
+            </div>
+
+            {/* Thumbnail Navigation */}
+            {job.images && job.images.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+                {job.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToImage(idx)}
+                    className={`relative flex-shrink-0 w-16 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                      currentImageIndex === idx
+                        ? 'border-cyan-500 ring-2 ring-cyan-500/50'
+                        : 'border-zinc-700 hover:border-zinc-600 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <Image
+                      src={img}
+                      alt={`Thumbnail ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+
+      {/* Full Screen Modal (Optional - Click to expand) */}
       {isExpanded && job.images && (
         <div
           className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setIsExpanded(false)}
         >
           <div
-            className="relative max-w-6xl w-full bg-zinc-900 rounded-2xl p-6 max-h-[90vh] overflow-y-auto"
+            className="relative max-w-4xl w-full bg-zinc-900 rounded-2xl p-6"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
@@ -234,22 +373,71 @@ function ProjectCard({ job, index }: ProjectCardProps) {
               <p className="text-zinc-400">{job.company}</p>
             </div>
 
-            {/* Image Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {job.images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-[9/16] rounded-xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors"
-                >
-                  <Image
-                    src={img}
-                    alt={`${job.role} screenshot ${idx + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+            {/* Carousel Container */}
+            <div className="relative">
+              {/* Main Image Display */}
+              <div className="relative aspect-[9/16] max-h-[60vh] mx-auto rounded-xl overflow-hidden border border-zinc-800">
+                <Image
+                  src={job.images[currentImageIndex]}
+                  alt={`${job.role} screenshot ${currentImageIndex + 1}`}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+
+              {/* Navigation Arrows */}
+              {job.images.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-zinc-800/90 border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-300 shadow-xl backdrop-blur-sm group"
+                  >
+                    <svg className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-zinc-800/90 border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-300 shadow-xl backdrop-blur-sm group"
+                  >
+                    <svg className="w-6 h-6 text-zinc-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </>
+              )}
+
+              {/* Image Counter */}
+              <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-zinc-800/90 backdrop-blur-sm border border-zinc-700">
+                <span className="text-sm text-zinc-300 font-medium">
+                  {currentImageIndex + 1} / {job.images.length}
+                </span>
+              </div>
             </div>
+
+            {/* Thumbnail Navigation */}
+            {job.images.length > 1 && (
+              <div className="flex gap-3 mt-6 overflow-x-auto pb-2">
+                {job.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToImage(idx)}
+                    className={`relative flex-shrink-0 w-20 h-32 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                      currentImageIndex === idx
+                        ? 'border-cyan-500 ring-2 ring-cyan-500/50'
+                        : 'border-zinc-700 hover:border-zinc-600 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <Image
+                      src={img}
+                      alt={`Thumbnail ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -322,7 +510,7 @@ export function WorkSection() {
 
       <div className="relative space-y-10 sm:space-y-12">
         {/* Header */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 px-12">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <div>
               <h2 className="text-3xl sm:text-5xl font-bold mb-3">
@@ -366,7 +554,7 @@ export function WorkSection() {
         {/* Projects grid - 2 columns */}
         <div className="grid md:grid-cols-2 gap-5 px-12">
           {filteredJobs.map((job, index) => (
-            <ProjectCard
+            <EnhancedProjectCard
               key={`${job.year}-${job.role}`}
               job={job}
               index={index}

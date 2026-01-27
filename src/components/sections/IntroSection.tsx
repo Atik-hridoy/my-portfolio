@@ -9,6 +9,7 @@ import {
   SiTypescript,
 } from "react-icons/si";
 import { TypeAnimation } from "react-type-animation";
+import DecryptedText from "@/components/DecryptedText";
 
 export function IntroSection() {
   const skills = [
@@ -36,12 +37,17 @@ export function IntroSection() {
             </div>
 
             <h1
-              className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight
-                text-transparent bg-clip-text bg-gradient-to-r
-                from-[#06b6d4] via-[#a855f7] to-[#ef4444] animate-gradient bg-[length:200%_auto]"
+              className="text-5xl sm:text-6xl lg:text-7xl font-light tracking-tight"
             >
-              <div>
-                Atik Hridoy
+              <div className="text-transparent bg-clip-text bg-gradient-to-r from-[#06b6d4] via-[#a855f7] to-[#ef4444] animate-gradient bg-[length:200%_auto]">
+                <DecryptedText
+                  text="Atik Hridoy"
+                  animateOn="view"
+                  sequential
+                  speed={100}
+                  maxIterations={15}
+                  revealDirection="start"
+                />
                 <br />
                 <span className="inline-block min-w-[300px] sm:min-w-[400px] lg:min-w-[500px]">
                   <TypeAnimation

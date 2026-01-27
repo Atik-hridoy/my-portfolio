@@ -10,6 +10,8 @@ import { useGSAPScroll } from "@/hooks/useGSAPScroll";
 import { GlowCursor } from "@/components/GlowCursor";
 import { SectionDotsNav } from "@/components/SectionDotsNav";
 import { FooterControls } from "@/components/FooterControls";
+import { Logo } from "@/components/Logo";
+import { Loader } from "@/components/Loader";
 
 import { IntroSection } from "@/components/sections/IntroSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
@@ -28,6 +30,7 @@ export default function Home() {
   const [isDark, setIsDark] = useState(true);
   const [activeSection, setActiveSection] = useState("intro");
   const [mounted, setMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
@@ -47,6 +50,14 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
+  const handleLoaderComplete = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) {
+    return <Loader onComplete={handleLoaderComplete} />;
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       {/* 3D Space Background - Section aware */}
@@ -58,6 +69,7 @@ export default function Home() {
       
       <AnimatedBackground />
       <GlowCursor x={x} y={y} />
+      <Logo />
 
       <SectionDotsNav sections={sections} activeId={activeSection} onJump={scrollToSection} />
 
