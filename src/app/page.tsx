@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { AnimatedBackground } from "@/components/animated-background";
-import { ParticleBackground } from "@/components/3d/ParticleBackground";
 import { useThemeClass } from "@/hooks/useThemeClass";
 import { useCursorGlow } from "@/hooks/useCursorGlow";
 import { useSectionObserver } from "@/hooks/useSectionObserver";
@@ -18,9 +18,20 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ThoughtsSection } from "@/components/sections/ThoughtsSection";
 import { ConnectSection } from "@/components/sections/ConnectSection";
 
+// Dynamic import for 3D space
+const SpaceExperience3D = dynamic(
+  () => import("@/components/3d/SpaceExperience3D"),
+  { ssr: false }
+);
+
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
   const [activeSection, setActiveSection] = useState("intro");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useThemeClass(isDark);
   const { x, y } = useCursorGlow();
@@ -38,13 +49,19 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+      {/* 3D Space Background - Section aware */}
+      {/* {mounted && (
+        <div className="fixed inset-0 -z-30">
+          <SpaceExperience3D section={activeSection} />
+        </div>
+      )} */}
+      
       <AnimatedBackground />
-      <ParticleBackground />
       <GlowCursor x={x} y={y} />
 
       <SectionDotsNav sections={sections} activeId={activeSection} onJump={scrollToSection} />
 
-      <main className="max-w-4xl mx-auto relative z-10">
+      <main className="max-w-5xl mx-auto relative z-10 overflow-visible ">
         <IntroSection />
         <ExperienceSection />
         <WorkSection />

@@ -1,6 +1,5 @@
 "use client";
 
-import { TechPill } from "../pills/TechPill";
 import {
   SiReact,
   SiPython,
@@ -14,7 +13,7 @@ import { TypeAnimation } from "react-type-animation";
 export function IntroSection() {
   const skills = [
     { label: "React Native", Icon: SiReact },
-    { label: "Python", Icon : SiPython},
+    { label: "Python", Icon: SiPython },
     { label: "Kotlin", Icon: SiKotlin },
     { label: "Flutter", Icon: SiFlutter },
     { label: "Firebase", Icon: SiFirebase },
@@ -41,45 +40,26 @@ export function IntroSection() {
                 text-transparent bg-clip-text bg-gradient-to-r
                 from-[#06b6d4] via-[#a855f7] to-[#ef4444] animate-gradient bg-[length:200%_auto]"
             >
-              <div className="inline-block">
-                <TypeAnimation
-                  sequence={[
-                    "Atik",
-                    2000,
-                    "Atik",
-                    1000,
-                    "Mobile App",
-                    // 1000,
-                    // "Flutter",
-                    1000,
-                    "Atik",
-                    1000,
-                  ]}
-                  wrapper="span"
-                  speed={30}
-                  style={{ display: "inline-block" }}
-                  repeat={Infinity}
-                />
+              <div>
+                Atik Hridoy
                 <br />
-                <TypeAnimation
-                  sequence={[
-                    500,
-                    "Hridoy",
-                    2000,
-                    "Hridoy",
-                    500,
-                    "Developer",
-                    // 1000,
-                    // "Expert",
-                    1000,
-                    "Hridoy",
-                    1000,
-                  ]}
-                  wrapper="span"
-                  speed={30}
-                  style={{ display: "inline-block" }}
-                  repeat={Infinity}
-                />
+                <span className="inline-block min-w-[300px] sm:min-w-[400px] lg:min-w-[500px]">
+                  <TypeAnimation
+                    sequence={[
+                      "App Developer",
+                      2000,
+                      "Flutter Expert",
+                      2000,
+                      "App Creator",
+                      2000,
+                      
+                    ]}
+                    wrapper="span"
+                    speed={50}
+                    style={{ display: "inline-block" }}
+                    repeat={Infinity}
+                  />
+                </span>
               </div>
             </h1>
           </div>

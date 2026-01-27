@@ -1,17 +1,38 @@
 "use client";
 
-import { JobItem } from "../items/JobItem";
+import { useState, useRef, useEffect } from "react";
+import { FaExternalLinkAlt, FaGithub, FaCode, FaImages, FaTimes } from "react-icons/fa";
+import Image from "next/image";
 
-const JOBS = [
+type Job = {
+  year: string;
+  role: string;
+  company: string;
+  description: string;
+  tech: string[];
+  repo: string;
+  color: string;
+  gradient: string;
+  images?: string[];
+};
+
+const JOBS: Job[] = [
   {
     year: "2025",
     role: "Gift Moment",
     company: "Premium Gifting App",
     description:
-      "A premium, aesthetically driven Flutter application for modern gifting experiences. Features glassmorphism design, dynamic gradients, advanced chat system with voice messages, gift cards, and occasion-based browsing. Built with flutter_screenutil for responsive layouts.",
+      "A premium, aesthetically driven Flutter application for modern gifting experiences. Features glassmorphism design, dynamic gradients, advanced chat system with voice messages, gift cards, and occasion-based browsing.",
     tech: ["Flutter", "Dart", "Firebase"],
     repo: "https://github.com/Atik-hridoy/gift-moment",
     color: "from-pink-400 via-rose-300 to-orange-200",
+    gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    images: [
+      "/projects/gift_moment/1.png",
+      "/projects/gift_moment/2.png",
+      "/projects/gift_moment/3.png",
+      "/projects/gift_moment/4.png",
+    ],
   },
   {
     year: "2025",
@@ -22,6 +43,7 @@ const JOBS = [
     tech: ["Flutter", "Dart", "Firebase", "Google Maps API"],
     repo: "https://github.com/Atik-hridoy/kindered_app",
     color: "from-pink-500 via-rose-500 to-red-500",
+    gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
   },
   {
     year: "2025",
@@ -32,6 +54,7 @@ const JOBS = [
     tech: ["Flutter", "Dart"],
     repo: "https://github.com/Atik-hridoy/elecktro-ecommerce",
     color: "from-cyan-500 via-blue-500 to-indigo-500",
+    gradient: "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
   },
   {
     year: "2022",
@@ -42,40 +65,311 @@ const JOBS = [
     tech: ["Flutter", "Dart", "Firebase"],
     repo: "https://github.com/Atik-hridoy/electroNic_seller",
     color: "from-purple-500 via-violet-500 to-fuchsia-500",
+    gradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
   },
 ];
 
+type ProjectCardProps = {
+  job: Job;
+  index: number;
+};
+
+function ProjectCard({ job, index }: ProjectCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return (
+    <>
+      <div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="group relative "
+        style={{
+          animationDelay: `${index * 100}ms`,
+        
+        }}
+      >
+        {/* Animated background glow */}
+        <div
+          className="absolute -inset-0.5 bg-gradient-to-r opacity-0 group-hover:opacity-100 blur-xl transition-all duration-700 rounded-2xl"
+          style={{
+            background: job.gradient,
+          }}
+        />
+
+        {/* Main card */}
+        <div className="relative bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-500 hover:border-zinc-700 h-full flex flex-col">
+          {/* Spotlight effect */}
+          {isHovered && (
+            <div
+              className="pointer-events-none absolute opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, 0.1), transparent 40%)`,
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          )}
+
+          <div className="relative p-5 sm:p-6">
+            {/* Header */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <div
+                    className={`px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r ${job.color} text-white`}
+                  >
+                    {job.year}
+                  </div>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-1.5 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:to-purple-500 transition-all duration-300">
+                  {job.role}
+                </h3>
+
+                <p className="text-zinc-400 text-sm font-medium flex items-center gap-1.5">
+                  <FaCode className="w-3.5 h-3.5" />
+                  {job.company}
+                </p>
+              </div>
+
+              <div className="flex gap-2">
+                {job.images && job.images.length > 0 && (
+                  <button
+                    onClick={() => setIsExpanded(true)}
+                    className="p-2 rounded-lg bg-zinc-800/50 border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-300 group/icon"
+                  >
+                    <FaImages className="w-4 h-4 text-zinc-400 group-hover/icon:text-white transition-colors" />
+                  </button>
+                )}
+                <a
+                  href={job.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-zinc-800/50 border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-300 group/icon"
+                >
+                  <FaGithub className="w-4 h-4 text-zinc-400 group-hover/icon:text-white transition-colors" />
+                </a>
+              </div>
+            </div>
+
+            {/* Description */}
+            <p className="text-zinc-300 leading-relaxed mb-4 text-sm">
+              {job.description}
+            </p>
+
+            {/* Tech stack */}
+            <div className="flex flex-wrap gap-1.5 mb-4 ">
+              {job.tech.map((tech, i) => (
+                <div
+                  key={tech}
+                  className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-300 hover:bg-zinc-700/50 hover:border-zinc-600 transition-all duration-300"
+                  style={{
+                    animationDelay: `${i * 50}ms`,
+                  }}
+                >
+                  {tech}
+                </div>
+              ))}
+            </div>
+
+            {/* Footer with animated line */}
+            <div className="relative pt-4 border-t border-zinc-800 grow">
+              <div
+                className="absolute top-0 left-0 h-0.5 bg-gradient-to-r transition-all duration-500 ease-out"
+                style={{
+                  width: isHovered ? "100%" : "0%",
+                  background: job.gradient,
+                }}
+              />
+
+              <a
+                href={job.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-end gap-2 text-xs font-medium text-zinc-400 hover:text-white transition-colors group/link"
+              >
+                View Project
+                <FaExternalLinkAlt className="w-3 h-3 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Image Gallery Modal */}
+      {isExpanded && job.images && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setIsExpanded(false)}
+        >
+          <div
+            className="relative max-w-6xl w-full bg-zinc-900 rounded-2xl p-6 max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setIsExpanded(false)}
+              className="absolute top-4 right-4 p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors z-10"
+            >
+              <FaTimes className="w-5 h-5 text-zinc-400" />
+            </button>
+
+            {/* Header */}
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-white mb-2">{job.role}</h3>
+              <p className="text-zinc-400">{job.company}</p>
+            </div>
+
+            {/* Image Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {job.images.map((img, idx) => (
+                <div
+                  key={idx}
+                  className="relative aspect-[9/16] rounded-xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors"
+                >
+                  <Image
+                    src={img}
+                    alt={`${job.role} screenshot ${idx + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 export function WorkSection() {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = document.getElementById("work");
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const sectionHeight = section.offsetHeight;
+
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        const progress = Math.min(
+          Math.max(
+            (windowHeight - rect.top) / (windowHeight + sectionHeight),
+            0
+          ),
+          1
+        );
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const years = ["all", ...new Set(JOBS.map((job) => job.year))];
+
+  const filteredJobs =
+    activeFilter === "all"
+      ? JOBS
+      : JOBS.filter((job) => job.year === activeFilter);
+
   return (
     <section
       id="work"
       data-observe="section"
       data-gsap-section
-      className="min-h-screen py-20 sm:py-32 relative"
+      className="py-20 sm:py-24 relative overflow-hidden "
     >
-      <div className="space-y-12 sm:space-y-16">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-          <h2
-            data-gsap-heading
-            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
-          >
-            Selected <span className="font-semibold">Projects</span>
-          </h2>
-          <div
-            data-gsap-heading
-            className="text-sm text-muted-foreground font-mono"
-          >
-            2020 — 2025
+      {/* Animated background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+          style={{
+            transform: `scale(${1 + scrollProgress * 0.2})`,
+            opacity: scrollProgress * 0.6,
+          }}
+        />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
+          style={{
+            transform: `scale(${1 + scrollProgress * 0.2})`,
+            opacity: scrollProgress * 0.6,
+          }}
+        />
+      </div>
+
+      <div className="relative space-y-10 sm:space-y-12">
+        {/* Header */}
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+            <div>
+              <h2 className="text-3xl sm:text-5xl font-bold mb-3">
+                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                  Selected
+                </span>
+                <br />
+                <span className="text-white">Projects</span>
+              </h2>
+
+              <p className="text-zinc-400 text-base max-w-2xl">
+                Mobile applications built with modern technologies and design
+                principles.
+              </p>
+            </div>
+
+            <div className="text-xs text-zinc-500 font-mono flex items-center gap-2">
+              <div className="w-10 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500" />
+              2020 — 2025
+            </div>
+          </div>
+
+          {/* Filter buttons */}
+          <div className="flex flex-wrap gap-2">
+            {years.map((year) => (
+              <button
+                key={year}
+                onClick={() => setActiveFilter(year)}
+                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  activeFilter === year
+                    ? "bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-purple-500/20"
+                    : "bg-zinc-800/50 text-zinc-400 hover:bg-zinc-700/50 border border-zinc-700"
+                }`}
+              >
+                {year === "all" ? "All Projects" : year}
+              </button>
+            ))}
           </div>
         </div>
 
-        <div className="space-y-8 sm:space-y-12">
-          {JOBS.map((job, index) => (
-            <JobItem
+        {/* Projects grid - 2 columns */}
+        <div className="grid md:grid-cols-2 gap-5 px-12">
+          {filteredJobs.map((job, index) => (
+            <ProjectCard
               key={`${job.year}-${job.role}`}
               job={job}
               index={index}
-              onHover={() => {}}
             />
           ))}
         </div>

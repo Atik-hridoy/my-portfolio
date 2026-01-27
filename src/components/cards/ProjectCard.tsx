@@ -85,7 +85,7 @@ export function ProjectCard({ project }: { project: Project }) {
       className="group relative"
       style={{ transformStyle: "preserve-3d" }}
     >
-      <div className="relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500">
+      <div className="h-full relative bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-500">
         {/* 3D Media Display */}
         <div className="relative h-64 sm:h-80 overflow-hidden bg-gradient-to-br from-background/50 to-background">
           <div

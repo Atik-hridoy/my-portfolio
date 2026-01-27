@@ -1,12 +1,50 @@
 "use client";
 
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaFacebook,
+  FaEnvelope,
+} from "react-icons/fa";
+import { SiWhatsapp, SiTelegram } from "react-icons/si";
 
 const SOCIALS = [
-  { name: "GitHub", handle: "@atik-hridoy", url: "https://github.com/Atik-hridoy", icon: <FaGithub /> },
-  { name: "LinkedIn", handle: "atik-hridoy", url: "https://linkedin.com/in/md-atikuzzaman-riday-5678aa179/", icon: <FaLinkedin /> },
-  { name: "Facebook", handle: "@atik_hridoy", url: "https://www.facebook.com/atik.hridoy.001", icon: <FaFacebook /> },
+  {
+    name: "GitHub",
+    handle: "@atik-hridoy",
+    url: "https://github.com/Atik-hridoy",
+    icon: FaGithub,
+    color: "from-gray-400 to-gray-600",
+  },
+  {
+    name: "LinkedIn",
+    handle: "atik-hridoy",
+    url: "https://linkedin.com/in/md-atikuzzaman-riday-5678aa179/",
+    icon: FaLinkedin,
+    color: "from-blue-400 to-blue-600",
+  },
+  {
+    name: "Facebook",
+    handle: "@atik_hridoy",
+    url: "https://www.facebook.com/atik.hridoy.001",
+    icon: FaFacebook,
+    color: "from-blue-500 to-blue-700",
+  },
+  {
+    name: "WhatsApp",
+    handle: "+880 1521-438809",
+    url: "https://wa.me/8801521438809",
+    icon: SiWhatsapp,
+    color: "from-green-400 to-green-600",
+  },
+  {
+    name: "Telegram",
+    handle: "@atik_hridoy",
+    url: "https://t.me/atik_hridoy",
+    icon: SiTelegram,
+    color: "from-cyan-400 to-blue-500",
+  },
 ];
 
 export function ConnectSection() {
@@ -15,75 +53,98 @@ export function ConnectSection() {
       id="connect"
       data-observe="section"
       data-gsap-section
-      className="py-20 sm:py-32"
+      className="relative py-20 sm:py-24 overflow-hidden"
     >
-      <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
-        {/* LEFT SIDE */}
-        <div className="space-y-6 sm:space-y-8">
-          <h2 data-gsap-heading className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+      <div className="relative space-y-12">
+        {/* Heading */}
+        <div className="text-center space-y-3">
+          <h2
+            data-gsap-heading
+            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+          >
             Let's <span className="font-semibold">Connect</span>
           </h2>
+          <p
+            data-gsap-heading
+            className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto"
+          >
+            Open to collaborations and discussions about mobile development.
+          </p>
+        </div>
 
-          <div className="space-y-6">
-            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-              Open to new opportunities, collaborations, and discussions about{" "}
-              <span className="text-primary font-medium">mobile development</span> and{" "}
-              <span className="text-primary font-medium">app architecture</span>.
-            </p>
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {/* Left: Email CTA */}
+          <div className="group relative p-8 rounded-2xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
+            <div className="absolute inset-[1px] rounded-2xl bg-background/95 backdrop-blur-xl" />
 
-            <div className="space-y-4">
+            <div className="relative z-10 space-y-6">
+              <div className="space-y-2">
+                <div className="text-xs font-mono text-primary tracking-widest">
+                  GET IN TOUCH
+                </div>
+                <h3 className="text-xl sm:text-2xl font-semibold text-foreground">
+                  Ready to Build Something Amazing?
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Dhaka, Bangladesh • Available for work
+                </p>
+              </div>
+
               <Link
                 href="mailto:atik.hridoy.00@gmail.com"
-                className="group flex items-center gap-3 text-lg sm:text-xl font-medium text-foreground hover:text-primary transition-colors duration-300"
+                className="group/btn relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl
+                  bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
+                  text-white font-semibold text-sm
+                  hover:shadow-lg hover:shadow-cyan-500/50
+                  transition-all duration-300 w-full sm:w-auto"
               >
-                <span className="underline decoration-dashed underline-offset-4 group-hover:decoration-solid">
-                  atik.hridoy.00@gmail.com
-                </span>
-                <svg
-                  className="w-6 h-6 transform group-hover:translate-x-1 transition-transform duration-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
+                <FaEnvelope className="w-4 h-4" />
+                atik.hridoy.00@gmail.com
               </Link>
             </div>
           </div>
-        </div>
 
-        {/* RIGHT SIDE */}
-        <div className="space-y-6 sm:space-y-8">
-          <div className="text-sm text-primary font-mono tracking-widest">
-            ELSEWHERE
-          </div>
+          {/* Right: Social Links */}
+          <div className="space-y-4">
+            <div className="text-xs font-mono text-primary tracking-widest text-center lg:text-left">
+              FIND ME ELSEWHERE
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {SOCIALS.map((social) => (
-              <Link
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                className="group p-5 border border-border/50 rounded-2xl bg-white/5 backdrop-blur-xl hover:border-primary/60 transition-all duration-500 hover:shadow-[0_0_25px_rgba(6,182,212,0.25)] flex items-center gap-4"
-              >
-                <div className="text-2xl text-primary group-hover:scale-110 transition-transform duration-300">
-                  {social.icon}
-                </div>
-                <div className="flex flex-col">
-                  <div className="text-foreground font-medium group-hover:text-primary transition-colors duration-300">
-                    {social.name}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {social.handle}
-                  </div>
-                </div>
-              </Link>
-            ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3">
+              {SOCIALS.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <Link
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative p-4 rounded-xl overflow-hidden transition-all duration-300 hover:scale-105"
+                  >
+                    <div
+                      className={`absolute inset-0 rounded-xl bg-gradient-to-br ${social.color} opacity-20 group-hover:opacity-40 transition-opacity duration-300`}
+                    />
+                    <div className="absolute inset-[1px] rounded-xl bg-background/95 backdrop-blur-xl" />
+
+                    <div className="relative z-10 flex items-center gap-3">
+                      <div className="text-2xl text-foreground group-hover:scale-110 transition-transform duration-300">
+                        <Icon />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-semibold text-foreground truncate">
+                          {social.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground font-mono truncate">
+                          {social.handle}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

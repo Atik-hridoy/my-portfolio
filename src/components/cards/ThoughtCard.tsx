@@ -22,37 +22,59 @@ export const ThoughtCard = memo(function ThoughtCard({
     <article
       data-gsap-card
       onClick={onClick}
-      className="group relative p-6 sm:p-8 border border-border/50 rounded-2xl 
-      bg-card/20 backdrop-blur-lg 
-      transition-all duration-500 cursor-pointer
-      hover:shadow-[0_0_40px_rgba(6,182,212,0.2)] 
-      hover:border-primary/60 hover:-translate-y-1"
+      className="group relative p-6 sm:p-8 rounded-2xl cursor-pointer overflow-hidden"
     >
-      {/* Decorative gradient glow */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 pointer-events-none" />
+      {/* Holographic border effect */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+      <div className="absolute inset-[1px] rounded-2xl bg-background/95 backdrop-blur-xl" />
 
-      <div className="relative space-y-4">
-        {/* Meta */}
-        <div className="flex items-center justify-between text-xs text-primary font-mono tracking-wide">
-          <span>{t.date}</span>
-          <span>{t.readTime}</span>
+      {/* Scan line animation */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent animate-scan" />
+      </div>
+
+      {/* Corner accents */}
+      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+      {/* Glitch effect overlay */}
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none mix-blend-screen">
+        <div className="absolute inset-0 bg-cyan-500/5 animate-glitch-1" />
+        <div className="absolute inset-0 bg-purple-500/5 animate-glitch-2" />
+      </div>
+
+      <div className="relative space-y-4 z-10">
+        {/* Meta with tech styling */}
+        <div className="flex items-center justify-between text-xs font-mono tracking-wider">
+          <span className="text-cyan-400 group-hover:text-cyan-300 transition-colors">
+            [{t.date}]
+          </span>
+          <span className="text-purple-400 group-hover:text-purple-300 transition-colors">
+            &lt;{t.readTime}/&gt;
+          </span>
         </div>
 
-        {/* Title */}
-        <h3 className="text-lg sm:text-xl font-semibold leading-snug transition-colors duration-300 group-hover:text-primary">
+        {/* Title with glow */}
+        <h3 className="text-lg sm:text-xl font-bold leading-snug transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:via-blue-400 group-hover:to-purple-400">
           {t.title}
         </h3>
 
         {/* Excerpt */}
-        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed group-hover:text-foreground/80 transition-colors duration-300">
           {t.excerpt}
         </p>
 
-        {/* Read more link */}
-        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">
-          <span>Read more</span>
+        {/* Read more with animated arrow */}
+        <div className="flex items-center gap-2 text-sm font-mono text-cyan-500 group-hover:text-cyan-400 transition-colors duration-300">
+          <span className="relative">
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">{'>'}</span>
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">{'>'}</span>
+            <span className="ml-2">ACCESS_DATA</span>
+          </span>
           <svg
-            className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
+            className="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -61,6 +83,48 @@ export const ThoughtCard = memo(function ThoughtCard({
           </svg>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes scan {
+          0% {
+            transform: translateY(-100%);
+          }
+          100% {
+            transform: translateY(100%);
+          }
+        }
+        @keyframes glitch-1 {
+          0%, 100% {
+            transform: translate(0);
+          }
+          33% {
+            transform: translate(-2px, 2px);
+          }
+          66% {
+            transform: translate(2px, -2px);
+          }
+        }
+        @keyframes glitch-2 {
+          0%, 100% {
+            transform: translate(0);
+          }
+          33% {
+            transform: translate(2px, -2px);
+          }
+          66% {
+            transform: translate(-2px, 2px);
+          }
+        }
+        .animate-scan {
+          animation: scan 3s linear infinite;
+        }
+        .animate-glitch-1 {
+          animation: glitch-1 0.3s infinite;
+        }
+        .animate-glitch-2 {
+          animation: glitch-2 0.3s infinite 0.15s;
+        }
+      `}</style>
     </article>
   );
 });
