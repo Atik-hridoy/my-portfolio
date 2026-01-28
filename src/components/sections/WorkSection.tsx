@@ -74,7 +74,7 @@ const JOBS: Job[] = [
   },
   {
     year: "2025",
-    role: "Hpayy Shopping",
+    role: "Happyy Shopping",
     company: "Elecktro E-commerce",
     description:
       "Developed a cross-platform e-commerce app with product catalog, shopping cart, and user profile features. Implemented responsive design with dark/light theme support and multi-language localization.",
