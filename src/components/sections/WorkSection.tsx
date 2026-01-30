@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { FaExternalLinkAlt, FaGithub, FaCode, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import { EnhancedProjectCard } from "@/components/cards/EnhancedProjectCard";
+import { SectionBackground } from "@/components/SectionBackground";
 
 type Job = {
   year: string;
@@ -479,6 +480,15 @@ function ProjectCard({ job, index }: ProjectCardProps) {
 export function WorkSection() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const years = ["all", ...new Set(JOBS.map((job) => job.year))];
+
+  const filteredJobs =
+    activeFilter === "all"
+      ? JOBS
+      : JOBS.filter((job) => job.year === activeFilter);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -507,12 +517,21 @@ export function WorkSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const years = ["all", ...new Set(JOBS.map((job) => job.year))];
+  // Track carousel scroll position
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel || filteredJobs.length === 0) return;
 
-  const filteredJobs =
-    activeFilter === "all"
-      ? JOBS
-      : JOBS.filter((job) => job.year === activeFilter);
+    const handleCarouselScroll = () => {
+      const scrollLeft = carousel.scrollLeft;
+      const cardWidth = window.innerWidth * 0.85 + 16; // 85vw + gap
+      const index = Math.round(scrollLeft / cardWidth);
+      setActiveCardIndex(Math.min(index, filteredJobs.length - 1));
+    };
+
+    carousel.addEventListener('scroll', handleCarouselScroll, { passive: true });
+    return () => carousel.removeEventListener('scroll', handleCarouselScroll);
+  }, [filteredJobs]);
 
   return (
     <section
@@ -521,6 +540,7 @@ export function WorkSection() {
       data-gsap-section
       className="py-20 sm:py-24 relative overflow-hidden "
     >
+      <SectionBackground variant="work" />
       {/* Animated background elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -545,14 +565,14 @@ export function WorkSection() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <div>
               <h2 className="text-3xl sm:text-5xl font-bold mb-3">
-                <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-amber-500 via-pink-500 to-purple-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 bg-clip-text text-transparent">
                   Selected
                 </span>
                 <br />
-                <span className="text-white">Projects</span>
+                <span className="text-zinc-800 dark:text-white">Projects</span>
               </h2>
 
-              <p className="text-zinc-400 text-base max-w-2xl">
+              <p className="text-zinc-600 dark:text-zinc-400 text-base max-w-2xl">
                 Mobile applications built with modern technologies and design
                 principles.
               </p>
@@ -582,8 +602,8 @@ export function WorkSection() {
           </div>
         </div>
 
-        {/* Projects grid - 2 columns */}
-        <div className="grid md:grid-cols-2 gap-5 px-12">
+        {/* Projects grid - 2 columns on desktop, swipeable carousel on mobile */}
+        <div className="hidden md:grid md:grid-cols-2 gap-5 px-12">
           {filteredJobs.map((job, index) => (
             <EnhancedProjectCard
               key={`${job.year}-${job.role}`}
@@ -591,6 +611,46 @@ export function WorkSection() {
               index={index}
             />
           ))}
+        </div>
+
+        {/* Mobile Swipeable Carousel */}
+        <div className="md:hidden relative">
+          <div 
+            ref={carouselRef}
+            className="flex gap-4 overflow-x-scroll snap-x snap-mandatory scrollbar-hide pb-4 px-4 -mx-4"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+              scrollPaddingLeft: '1rem',
+            }}
+          >
+            {filteredJobs.map((job, index) => (
+              <div 
+                key={`${job.year}-${job.role}`}
+                className="flex-shrink-0 w-[85vw] snap-center first:ml-4 last:mr-4"
+              >
+                <EnhancedProjectCard
+                  job={job}
+                  index={index}
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Scroll indicators */}
+          <div className="flex justify-center gap-2 mt-4">
+            {filteredJobs.map((_, idx) => (
+              <div
+                key={idx}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  activeCardIndex === idx
+                    ? 'w-8 bg-cyan-500'
+                    : 'w-2 bg-zinc-600'
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

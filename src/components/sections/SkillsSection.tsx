@@ -12,6 +12,7 @@ import {
   SiTsnode,
   SiDjango,
 } from "react-icons/si";
+import { SectionBackground } from "@/components/SectionBackground";
 
 const skillsData = [
   { subject: "Flutter", A: 85, fullMark: 100, icon: <SiFlutter className="w-6 h-6" />, color: "from-blue-400 to-cyan-400" },
@@ -75,6 +76,7 @@ export function SkillsSection() {
 
   return (
     <section id="skills" data-observe="section" data-gsap-section className="py-20 sm:py-32 relative overflow-hidden">
+      <SectionBackground variant="skills" />
       {/* Animated background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse" />
@@ -86,7 +88,7 @@ export function SkillsSection() {
         <div className="text-center mb-16">
           <h2
             data-gsap-heading
-            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-amber-500 via-pink-500 to-purple-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 bg-clip-text text-transparent"
           >
             My <span className="font-semibold">Skills</span>
           </h2>
@@ -306,32 +308,9 @@ export function SkillsSection() {
                   </>
                 )}
 
-                {/* Center pulse effect */}
+                {/* Center dot - static */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <motion.div
-                    className="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [1, 0.5, 1],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                  <motion.div
-                    className="absolute w-8 h-8 rounded-full border-2 border-cyan-400"
-                    animate={{
-                      scale: [1, 2, 1],
-                      opacity: [0.8, 0, 0.8],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeOut",
-                    }}
-                  />
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500" />
                 </div>
               </div>
 

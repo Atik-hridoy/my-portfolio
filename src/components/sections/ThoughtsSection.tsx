@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ThoughtCard } from "../cards/ThoughtCard";
 import { ThoughtModal } from "../modals/ThoughtModal";
+import { SectionBackground } from "@/components/SectionBackground";
 
 const THOUGHTS = [
   {
@@ -302,12 +303,13 @@ export function ThoughtsSection() {
       data-gsap-section
       className="relative min-h-screen py-20 sm:py-32"
     >
-      <div className="relative space-y-12 sm:space-y-16">
+      <SectionBackground variant="thoughts" />
+      <div className="relative space-y-12 sm:space-y-16 z-10">
         {/* Heading */}
         <div className="text-center space-y-4">
           <h2
             data-gsap-heading
-            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-amber-500 via-pink-500 to-purple-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 bg-clip-text text-transparent"
           >
             Recent <span className="font-semibold">Thoughts</span>
           </h2>

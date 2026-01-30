@@ -28,6 +28,10 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
   const [expandedImageId, setExpandedImageId] = useState<number>(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Touch handling for mobile swipe
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
   // Auto-rotate images
   useEffect(() => {
@@ -50,6 +54,32 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     setMousePosition({ x, y });
   }, []);
+
+  // Handle touch events for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!job.images || job.images.length <= 1) return;
+    
+    const swipeThreshold = 50;
+    const swipeDistance = touchStart - touchEnd;
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        // Swiped left - next image
+        setExpandedImageId((prev) => (prev + 1) % job.images!.length);
+      } else {
+        // Swiped right - previous image
+        setExpandedImageId((prev) => (prev - 1 + job.images!.length) % job.images!.length);
+      }
+    }
+  };
 
   return (
     <div
@@ -135,7 +165,12 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
 
           {/* Expandable Image Cards */}
           {job.images && job.images.length > 0 && (
-            <div className="relative mb-4 h-[300px] rounded-xl overflow-hidden">
+            <div 
+              className="relative mb-4 h-[300px] rounded-xl overflow-hidden"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <div className="flex gap-2 w-full h-full">
                 {job.images.map((img, idx) => {
                   const isExpanded = expandedImageId === idx;
@@ -175,6 +210,20 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
                     </motion.div>
                   );
                 })}
+              </div>
+              
+              {/* Swipe indicator for mobile */}
+              <div className="md:hidden absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                {job.images.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                      expandedImageId === idx
+                        ? 'bg-cyan-500 w-4'
+                        : 'bg-zinc-600'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           )}

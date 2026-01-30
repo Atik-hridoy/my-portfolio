@@ -8,6 +8,7 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { SiWhatsapp, SiTelegram } from "react-icons/si";
+import { SectionBackground } from "@/components/SectionBackground";
 
 const SOCIALS = [
   {
@@ -55,12 +56,13 @@ export function ConnectSection() {
       data-gsap-section
       className="relative py-20 sm:py-24 overflow-hidden"
     >
-      <div className="relative space-y-12">
+      <SectionBackground variant="connect" />
+      <div className="relative space-y-12 z-10">
         {/* Heading */}
         <div className="text-center space-y-3">
           <h2
             data-gsap-heading
-            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+            className="text-3xl sm:text-5xl font-light bg-gradient-to-r from-amber-500 via-pink-500 to-purple-600 dark:from-cyan-400 dark:via-blue-500 dark:to-purple-500 bg-clip-text text-transparent"
           >
             Let's <span className="font-semibold">Connect</span>
           </h2>
