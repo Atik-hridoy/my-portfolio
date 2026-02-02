@@ -26,7 +26,7 @@ export const ThoughtCard = memo(function ThoughtCard({
     >
       {/* Holographic border effect - Always visible on mobile */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-30 md:opacity-20 md:group-hover:opacity-40 transition-opacity duration-500" />
-      <div className="absolute inset-[1px] rounded-2xl bg-background/95 backdrop-blur-xl" />
+      <div className="absolute inset-[1px] rounded-2xl bg-background/95" />
 
       {/* Scan line animation - Always visible on mobile */}
       <div className="absolute inset-0 opacity-30 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500">

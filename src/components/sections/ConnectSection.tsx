@@ -77,7 +77,7 @@ export function ConnectSection() {
           {/* Left: Email CTA */}
           <div className="group relative p-8 rounded-2xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-10 group-hover:opacity-20 transition-opacity duration-500" />
-            <div className="absolute inset-[1px] rounded-2xl bg-background/95 backdrop-blur-xl" />
+            <div className="absolute inset-[1px] rounded-2xl bg-background/95" />
 
             <div className="relative z-10 space-y-6">
               <div className="space-y-2">

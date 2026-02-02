@@ -39,7 +39,7 @@ export function ExperienceItem({ experience, isLast, index }: ExperienceItemProp
 
       {/* Card */}
       <div className="sm:ml-8 group">
-        <div className="relative bg-zinc-900/60 backdrop-blur-sm border border-zinc-800/50 rounded-xl p-5 sm:p-6 hover:bg-zinc-900/80 hover:border-zinc-700/50 transition-all duration-300">
+        <div className="relative bg-zinc-900/80 border border-zinc-800/50 rounded-xl p-5 sm:p-6 hover:bg-zinc-900/90 hover:border-zinc-700/50 transition-all duration-300">
           
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">

@@ -75,7 +75,7 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
       />
 
       {/* Main card */}
-      <div className="relative bg-zinc-900/90 backdrop-blur-xl border border-zinc-800 md:hover:border-zinc-700 rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col">
+      <div className="relative bg-zinc-900/90 border border-zinc-800 md:hover:border-zinc-700 rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col">
         {/* Spotlight effect */}
         {isHovered && (
           <div

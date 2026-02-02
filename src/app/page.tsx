@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useMemo, useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 import { AnimatedBackground } from "@/components/animated-background";
 import { useThemeClass } from "@/hooks/useThemeClass";
 import { useCursorGlow } from "@/hooks/useCursorGlow";
@@ -20,12 +19,6 @@ import { WorkSection } from "@/components/sections/WorkSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
 import { ThoughtsSection } from "@/components/sections/ThoughtsSection";
 import { ConnectSection } from "@/components/sections/ConnectSection";
-
-// Dynamic import for 3D space
-const SpaceExperience3D = dynamic(
-  () => import("@/components/3d/SpaceExperience3D"),
-  { ssr: false }
-);
 
 export default function Home() {
   const [isDark, setIsDark] = useState(true);
@@ -61,13 +54,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-      {/* 3D Space Background - Section aware */}
-      {/* {mounted && (
-        <div className="fixed inset-0 -z-30">
-          <SpaceExperience3D section={activeSection} />
-        </div>
-      )} */}
-      
       <AnimatedBackground />
       <GlowCursor x={x} y={y} />
       <Logo />

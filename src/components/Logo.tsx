@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 
 export function Logo() {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    setIsMobile(window.innerWidth < 768);
   }, []);
 
   return (
@@ -26,14 +28,14 @@ export function Logo() {
             className="fill-white/20 dark:fill-white/10"
           />
           
-          {/* Compass rotating */}
+          {/* Compass rotating - Slower on mobile */}
           <g>
             <animateTransform
               attributeName="transform"
               type="rotate"
               from="0 100 100"
               to="360 100 100"
-              dur="1.6s"
+              dur={isMobile ? "3s" : "1.6s"}
               repeatCount="indefinite"
             />
             
@@ -54,12 +56,12 @@ export function Logo() {
             />
           </g>
           
-          {/* Center dot */}
+          {/* Center dot - Slower pulse on mobile */}
           <circle cx="100" cy="60" r="7" fill="#111827">
             <animate 
               attributeName="r"
               values="6;9;6"
-              dur="1s"
+              dur={isMobile ? "2s" : "1s"}
               repeatCount="indefinite"
             />
           </circle>
@@ -94,8 +96,10 @@ export function Logo() {
           </>
         )}
 
-        {/* Simple hover glow */}
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-purple-500/0 to-orange-500/0 group-hover:from-cyan-500/20 group-hover:via-purple-500/20 group-hover:to-orange-500/20 rounded-full blur-xl transition-all duration-500" />
+        {/* Simple hover glow - Disabled on mobile */}
+        {!isMobile && (
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-purple-500/0 to-orange-500/0 group-hover:from-cyan-500/20 group-hover:via-purple-500/20 group-hover:to-orange-500/20 rounded-full blur-xl transition-all duration-500" />
+        )}
       </div>
       
       {/* Simple Tooltip - hidden on mobile */}

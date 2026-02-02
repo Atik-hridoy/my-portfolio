@@ -63,12 +63,12 @@ export function ThoughtModal({ thought, isOpen, onClose }: ThoughtModalProps) {
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80"
       onClick={handleClose}
     >
       <div
         ref={modalRef}
-        className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-card/95 backdrop-blur-xl border border-border/50 rounded-3xl shadow-2xl"
+        className="relative w-full max-w-3xl max-h-[85vh] overflow-y-auto bg-card/98 border border-border/50 rounded-3xl shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}

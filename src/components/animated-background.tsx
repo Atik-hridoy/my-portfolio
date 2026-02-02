@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react"
 
 export function AnimatedBackground() {
-  const PARTICLE_COUNT = 80
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -12,6 +11,10 @@ export function AnimatedBackground() {
 
     const ctx = canvas.getContext("2d")
     if (!ctx) return
+
+    // Reduce particles on mobile
+    const isMobile = window.innerWidth < 768
+    const PARTICLE_COUNT = isMobile ? 30 : 60
 
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
@@ -30,34 +33,38 @@ export function AnimatedBackground() {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        size: 1.5 + Math.random() * 3 + 1,
-        speedX: (Math.random() - 0.5) * 0.2 + Math.random() * 0.35,
-        speedY: (Math.random() - 0.5) * 0.2 + Math.random() * 0.35,
-        opacity: 0.15 + Math.random() * 0.25 + 0.2,
+        size: 1.5 + Math.random() * 2,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        opacity: 0.2 + Math.random() * 0.3,
       })
     }
+
+    let animationFrameId: number
 
     function animate() {
       if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      // Draw connections
-      particles.forEach((particle, i) => {
-        particles.slice(i + 1).forEach((otherParticle) => {
-          const dx = particle.x - otherParticle.x
-          const dy = particle.y - otherParticle.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
+      // Draw connections (only on desktop for performance)
+      if (!isMobile) {
+        particles.forEach((particle, i) => {
+          particles.slice(i + 1).forEach((otherParticle) => {
+            const dx = particle.x - otherParticle.x
+            const dy = particle.y - otherParticle.y
+            const distance = Math.sqrt(dx * dx + dy * dy)
 
-          if (distance < 150) {
-            ctx.beginPath()
-            ctx.strokeStyle = `rgba(6, 182, 212, ${0.15 * (1 - distance / 150)})`
-            ctx.lineWidth = 1
-            ctx.moveTo(particle.x, particle.y)
-            ctx.lineTo(otherParticle.x, otherParticle.y)
-            ctx.stroke()
-          }
+            if (distance < 120) {
+              ctx.beginPath()
+              ctx.strokeStyle = `rgba(6, 182, 212, ${0.1 * (1 - distance / 120)})`
+              ctx.lineWidth = 0.5
+              ctx.moveTo(particle.x, particle.y)
+              ctx.lineTo(otherParticle.x, otherParticle.y)
+              ctx.stroke()
+            }
+          })
         })
-      })
+      }
 
       // Draw and update particles
       particles.forEach((particle) => {
@@ -73,7 +80,7 @@ export function AnimatedBackground() {
         if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1
       })
 
-      requestAnimationFrame(animate)
+      animationFrameId = requestAnimationFrame(animate)
     }
 
     animate()
@@ -87,8 +94,9 @@ export function AnimatedBackground() {
 
     return () => {
       window.removeEventListener("resize", handleResize)
+      cancelAnimationFrame(animationFrameId)
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-60" />
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none opacity-50" />
 }
