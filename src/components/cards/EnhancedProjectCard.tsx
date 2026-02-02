@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback } from "react";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Image from "next/image";
 import { TechPill } from "@/components/pills/TechPill";
-import { motion } from "framer-motion";
 
 type Job = {
   year: string;
@@ -26,49 +25,48 @@ type EnhancedProjectCardProps = {
 export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedImageId, setExpandedImageId] = useState<number>(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Touch handling for mobile swipe
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
 
-  // Auto-rotate images
-  useEffect(() => {
+  // Handle touch events for swipe
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
     if (!job.images || job.images.length <= 1) return;
     
-    const interval = setInterval(() => {
-      setExpandedImageId((prev) => (prev + 1) % job.images!.length);
-    }, 3000); // Change every 3 seconds
+    const swipeThreshold = 50;
+    const swipeDistance = touchStart - touchEnd;
 
-    return () => clearInterval(interval);
-  }, [job.images]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    // Disable 3D tilt on mobile for better performance
-    if (window.innerWidth < 768) return;
-    
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePosition({ x, y });
-  }, []);
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance > 0) {
+        // Swiped left - next image
+        setExpandedImageId((prev) => (prev + 1) % job.images!.length);
+      } else {
+        // Swiped right - previous image
+        setExpandedImageId((prev) => (prev - 1 + job.images!.length) % job.images!.length);
+      }
+    }
+  };
 
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative"
-      style={{
-        animationDelay: `${index * 100}ms`,
-        transform: isHovered && window.innerWidth >= 768
-          ? `perspective(1000px) rotateX(${(mousePosition.y - 50) / 20}deg) rotateY(${(mousePosition.x - 50) / 20}deg) translateZ(10px)`
-          : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)',
-        transition: 'transform 0.3s ease-out',
-      }}
+      className="group relative h-full"
     >
-      {/* Animated background glow - Always visible on mobile */}
+      {/* Simplified background glow */}
       <div
-        className="absolute -inset-0.5 bg-gradient-to-r opacity-50 md:opacity-0 md:group-hover:opacity-100 blur-xl transition-all duration-700 rounded-2xl"
+        className="absolute -inset-0.5 opacity-30 md:opacity-0 md:group-hover:opacity-50 blur-lg transition-opacity duration-300 rounded-2xl pointer-events-none"
         style={{
           background: job.gradient,
         }}
@@ -133,20 +131,25 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
             ))}
           </div>
 
-          {/* Expandable Image Cards */}
+          {/* Expandable Image Cards - Simplified */}
           {job.images && job.images.length > 0 && (
-            <div className="relative mb-4 h-[300px] rounded-xl overflow-hidden">
+            <div 
+              className="relative mb-4 h-[280px] rounded-xl overflow-hidden"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <div className="flex gap-2 w-full h-full">
                 {job.images.map((img, idx) => {
                   const isExpanded = expandedImageId === idx;
                   
                   return (
-                    <motion.div
+                    <div
                       key={idx}
-                      className="relative h-full overflow-hidden rounded-xl cursor-pointer border border-zinc-800"
-                      initial={{ flex: isExpanded ? 3 : 1 }}
-                      animate={{ flex: isExpanded ? 3 : 1 }}
-                      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                      className="relative h-full overflow-hidden rounded-xl cursor-pointer border border-zinc-800 transition-all duration-300 ease-out"
+                      style={{
+                        flex: isExpanded ? 3 : 1,
+                      }}
                       onMouseEnter={() => setExpandedImageId(idx)}
                       onClick={() => setExpandedImageId(idx)}
                     >
@@ -156,25 +159,37 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
                           alt={`${job.role} screenshot ${idx + 1}`}
                           fill
                           className="object-cover"
+                          loading="lazy"
+                          quality={75}
                         />
                       </div>
 
                       {/* Overlay on non-expanded */}
                       {!isExpanded && (
-                        <motion.div
-                          className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors duration-300"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
-                        />
+                        <div className="absolute inset-0 bg-black/30 hover:bg-black/20 transition-colors duration-200" />
                       )}
 
                       {/* Image number indicator */}
                       <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/60 backdrop-blur-sm border border-zinc-700 flex items-center justify-center">
                         <span className="text-xs text-white font-medium">{idx + 1}</span>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })}
+              </div>
+              
+              {/* Swipe indicator for mobile */}
+              <div className="md:hidden absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full">
+                {job.images.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                      expandedImageId === idx
+                        ? 'bg-cyan-500 w-4'
+                        : 'bg-zinc-500'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           )}
@@ -182,7 +197,7 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
           {/* Footer with animated line */}
           <div className="relative pt-4 border-t border-zinc-800 mt-auto">
             <div
-              className="absolute top-0 left-0 h-0.5 bg-gradient-to-r transition-all duration-500 ease-out w-full md:w-0 md:group-hover:w-full"
+              className="absolute top-0 left-0 h-0.5 transition-all duration-300 ease-out w-full md:w-0 md:group-hover:w-full"
               style={{
                 background: job.gradient,
               }}

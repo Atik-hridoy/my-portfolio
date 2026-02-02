@@ -10,6 +10,7 @@ import {
 } from "react-icons/si";
 import { TypeAnimation } from "react-type-animation";
 import DecryptedText from "@/components/DecryptedText";
+import { SectionBackground } from "@/components/SectionBackground";
 
 export function IntroSection() {
   const skills = [
@@ -26,9 +27,11 @@ export function IntroSection() {
       id="intro"
       data-observe="section"
       data-gsap-section
-      className="min-h-[90vh] flex items-center justify-center py-12"
+      className="min-h-[90vh] flex items-center justify-center py-12 relative"
     >
-      <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full max-w-7xl mx-auto px-4 text-center sm:text-left">
+      <SectionBackground variant="intro" />
+
+      <div className="grid lg:grid-cols-5 gap-12 sm:gap-16 w-full max-w-7xl mx-auto px-4 text-center sm:text-left relative z-10">
         {/* Left side */}
         <div className="lg:col-span-3 space-y-6 sm:space-y-8 mx-auto sm:mx-0 w-full flex flex-col justify-center">
           <div className="space-y-3 sm:space-y-2">
