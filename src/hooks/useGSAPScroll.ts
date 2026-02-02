@@ -21,14 +21,14 @@ export function useGSAPScroll() {
     if (isMobile) {
       // Simple fade-in for all sections on mobile
       const sections = gsap.utils.toArray<HTMLElement>("[data-observe='section']");
-      sections.forEach((section) => {
+      sections.forEach((section, index) => {
         gsap.fromTo(
           section,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 50 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.8,
             ease: "power2.out",
             scrollTrigger: {
               trigger: section,
@@ -94,11 +94,12 @@ export function useGSAPScroll() {
     if (introSection) {
       gsap.fromTo(
         introSection,
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 60, scale: 0.95 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          scale: 1,
+          duration: 1.2,
           ease: "power2.out",
           scrollTrigger: {
             trigger: introSection,
@@ -115,11 +116,11 @@ export function useGSAPScroll() {
     if (experienceSection) {
       gsap.fromTo(
         experienceSection,
-        { opacity: 0, x: -60 },
+        { opacity: 0, x: -80 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: experienceSection,
@@ -136,11 +137,11 @@ export function useGSAPScroll() {
     if (workSection) {
       gsap.fromTo(
         workSection,
-        { opacity: 0, x: 60 },
+        { opacity: 0, x: 80 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.8,
+          duration: 1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: workSection,
@@ -157,11 +158,12 @@ export function useGSAPScroll() {
     if (skillsSection) {
       gsap.fromTo(
         skillsSection,
-        { opacity: 0, scale: 0.95 },
+        { opacity: 0, scale: 0.9, y: 60 },
         {
           opacity: 1,
           scale: 1,
-          duration: 0.8,
+          y: 0,
+          duration: 1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: skillsSection,
@@ -178,11 +180,11 @@ export function useGSAPScroll() {
     if (thoughtsSection) {
       gsap.fromTo(
         thoughtsSection,
-        { opacity: 0, y: 60 },
+        { opacity: 0, y: 80 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: thoughtsSection,
@@ -199,11 +201,12 @@ export function useGSAPScroll() {
     if (connectSection) {
       gsap.fromTo(
         connectSection,
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 60, scale: 0.95 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          scale: 1,
+          duration: 1,
           ease: "power2.out",
           scrollTrigger: {
             trigger: connectSection,

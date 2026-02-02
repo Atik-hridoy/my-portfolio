@@ -25,11 +25,23 @@ type EnhancedProjectCardProps = {
 export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [expandedImageId, setExpandedImageId] = useState<number>(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const cardRef = useRef<HTMLDivElement>(null);
   
   // Touch handling for mobile swipe
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // Disable 3D tilt on mobile for better performance
+    if (window.innerWidth < 768) return;
+    
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePosition({ x, y });
+  }, []);
 
   // Handle touch events for swipe
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -60,6 +72,7 @@ export function EnhancedProjectCard({ job, index }: EnhancedProjectCardProps) {
   return (
     <div
       ref={cardRef}
+      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="group relative h-full"
