@@ -159,7 +159,7 @@ export function SectionBackground({ variant = "intro" }: SectionBackgroundProps)
   };
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden md:hidden">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden hidden">
       {patterns[variant]}
     </div>
   );
